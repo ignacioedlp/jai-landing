@@ -1,5 +1,32 @@
 ---
-import { defaultLocale } from "@/i18n/config";
-
-return Astro.redirect(`/${defaultLocale}/`);
+import Layout from "@/layouts/Layout.astro";
+import Nav from "@/components/Nav.astro";
+import Hero from "@/components/Hero.astro";
+import Stats from "@/components/Stats.astro";
+import Works from "@/components/Works.astro";
+import Services from "@/components/Services.astro";
+import Team from "@/components/Team.astro";
+import Testimonials from "@/components/Testimonials.astro";
+import Process from "@/components/Process.astro";
+import Insights from "@/components/Insights.astro";
+import Footer from "@/components/Footer.astro";
 ---
+
+<Layout
+  lang="en"
+  title="JAI Studio | Product Design and Engineering"
+  description="JAI Studio designs and builds digital products for ambitious teams, from strategy to launch."
+>
+  <Nav lang="en" />
+  <main>
+    <Hero lang="en" />
+    <Stats lang="en" />
+    <Works lang="en" />
+    <Services lang="en" />
+    <Team lang="en" />
+    <Testimonials lang="en" />
+    <Process lang="en" />
+    <Insights lang="en" />
+  </main>
+  <Footer lang="en" />
+</Layout>

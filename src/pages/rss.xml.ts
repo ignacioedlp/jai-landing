@@ -11,7 +11,7 @@ export async function GET(context: { site: URL | undefined }) {
     title: "JAI Studio Blog",
     description:
       "Bilingual product, design, and engineering insights from JAI Studio.",
-    site: context.site ?? new URL("https://jai.studio"),
+    site: context.site ?? new URL("https://jai-studio.vercel.app"),
     items: sorted.map((post) => ({
       title: post.data.title,
       description: post.data.description,

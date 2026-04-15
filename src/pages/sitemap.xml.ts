@@ -12,7 +12,7 @@ function sitemapXml(urls: Array<{ loc: string; lastmod?: string }>): string {
 }
 
 export async function GET(context: { site: URL | undefined }) {
-  const site = context.site ?? new URL("https://jai.studio");
+  const site = context.site ?? new URL("https://jai-studio.vercel.app");
   const staticUrls = [
     "/",
     "/en/",

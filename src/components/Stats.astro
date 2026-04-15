@@ -1,0 +1,227 @@
+---
+const stats = [
+  {
+    value: "40+",
+    label: "Products shipped",
+    desc: "From brand refreshes to full-stack launches across industries.",
+  },
+  {
+    value: "12",
+    label: "Specialists on demand",
+    desc: "Designers, developers, and strategists working as one team.",
+  },
+  {
+    value: "99%",
+    label: "Client retention",
+    desc: "Long-term partnerships built on clarity, speed, and outcomes.",
+  },
+];
+---
+
+<section class="stats">
+  <div class="container stats-inner">
+    <div class="stats-top">
+      <div class="section-label" data-reveal="left">
+        <span class="dot"></span>
+        <span>IMPACT</span>
+      </div>
+      <h2 class="stats-heading" data-reveal="up" data-delay="150">
+        Measurable results for brands that need more than a pretty interface.
+      </h2>
+    </div>
+
+    <div class="stats-grid">
+      {
+        stats.map((stat, i) => (
+          <div class="stat-card" data-reveal="up" data-delay={i * 120}>
+            <div class="stat-top">
+              <span class="stat-value">{stat.value}</span>
+              <div class="divider" />
+            </div>
+            <div class="stat-bottom">
+              <p class="stat-label">{stat.label}</p>
+              <p class="stat-desc">{stat.desc}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="stats-cta" data-reveal="scale">
+      <a href="#" class="btn">
+        <span>LET'S TALK</span>
+        <span class="btn-icon">
+          <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M2 7h10M8 3l4 4-4 4"
+              stroke="black"
+              stroke-width="1.5"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats {
+    padding-block: 80px;
+  }
+
+  .stats-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+  }
+
+  .stats-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .stats-heading {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 1.38;
+    color: white;
+    max-width: 660px;
+    flex: 1;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+
+  .stat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .stat-top {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .stat-value {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 68px;
+    line-height: 72px;
+    color: white;
+    text-align: center;
+    display: block;
+  }
+
+  .stat-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+
+  .stat-label {
+    font-family: var(--font-orbitron);
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.7;
+    color: white;
+    letter-spacing: -0.48px;
+  }
+
+  .stat-desc {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.6;
+    color: white;
+  }
+
+  .stats-cta {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width: 1024px) {
+    .stats {
+      padding-block: 64px;
+    }
+
+    .stats-inner {
+      gap: 56px;
+    }
+
+    .stats-top {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .stats-heading {
+      font-size: 38px;
+      max-width: 100%;
+    }
+
+    .stat-value {
+      font-size: 56px;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 20px;
+      line-height: 1.4;
+    }
+
+    .stat-desc {
+      font-size: 16px;
+      line-height: 1.55;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .stats {
+      padding-block: 48px;
+    }
+
+    .stats-inner {
+      gap: 40px;
+    }
+
+    .stats-heading {
+      font-size: 30px;
+      line-height: 1.3;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .stat-card {
+      gap: 18px;
+    }
+
+    .stat-top {
+      gap: 16px;
+    }
+
+    .stat-value {
+      font-size: 46px;
+    }
+
+    .stat-label {
+      font-size: 18px;
+    }
+
+    .stat-desc {
+      font-size: 15px;
+    }
+  }
+</style>

@@ -1,0 +1,477 @@
+---
+const posts = [
+  {
+    num: "01",
+    img: "blog1.webp",
+    date: "Feb 12, 2025",
+    category: "Design",
+    title: "Why Product Thinking Improves Every Website",
+    excerpt:
+      "The strongest websites behave like products: focused flows, clear actions, and no wasted effort.",
+    featured: true,
+  },
+  {
+    num: "02",
+    img: "blog2.webp",
+    date: "Jan 28, 2025",
+    category: "Engineering",
+    title: "Choosing the Right Stack for a Fast Launch",
+    excerpt:
+      "What to prioritize when speed, scalability, and maintainability all matter.",
+    featured: false,
+  },
+  {
+    num: "03",
+    img: "blog3.webp",
+    date: "Jan 10, 2025",
+    category: "Strategy",
+    title: "How We Shape Clearer Product Roadmaps",
+    excerpt:
+      "Practical prioritization for teams that need direction, not more ideas.",
+    featured: false,
+  },
+  {
+    num: "04",
+    img: "blog4.webp",
+    date: "Dec 20, 2024",
+    category: "Delivery",
+    title: "How to Keep Momentum After Launch",
+    excerpt:
+      "A short framework for ongoing iteration once the first version is live.",
+    featured: false,
+  },
+];
+
+const featured = posts[0];
+const secondary = posts.slice(1);
+---
+
+<section class="insights">
+  <div class="container">
+    <!-- header -->
+    <div class="insights-header">
+      <div class="insights-header-left" data-reveal="left">
+        <div class="section-label-nocenter">
+          <span class="dot"></span>
+          <span>STUDIO NOTES</span>
+        </div>
+        <h2 class="insights-title">Insights</h2>
+      </div>
+      <div class="insights-header-right" data-reveal="right" data-delay="150">
+        <p class="insights-sub">
+          Thoughts on design, engineering,<br />and the way digital products are
+          built.
+        </p>
+        <a href="#" class="btn insights-btn">
+          <span>ALL POSTS</span>
+          <span class="btn-icon">
+            <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M2 7h10M8 3l4 4-4 4"
+                stroke="black"
+                stroke-width="1.5"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="divider" style="margin-bottom: 40px;"></div>
+
+    <!-- main grid -->
+    <div class="insights-grid">
+      <!-- featured: large left -->
+      <a
+        href="#"
+        class="post-card post-card--featured"
+        data-reveal="left"
+        data-delay="200"
+      >
+        <div class="post-img-wrap">
+          <img
+            src={featured.img}
+            alt={featured.title}
+            class="post-img"
+            loading="lazy"
+          />
+          <div class="post-overlay"></div>
+        </div>
+        <div class="post-body">
+          <div class="post-top">
+            <span class="post-category">{featured.category}</span>
+            <span class="post-num">{featured.num}</span>
+          </div>
+          <div class="post-bottom">
+            <time class="post-date">{featured.date}</time>
+            <h3 class="post-title">{featured.title}</h3>
+            <p class="post-excerpt">{featured.excerpt}</p>
+            <span class="post-link">
+              Read post
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- secondary: right column stack -->
+      <div class="posts-stack">
+        {
+          secondary.map((post, i) => (
+            <a
+              href="#"
+              class="post-card post-card--small"
+              data-reveal="right"
+              data-delay={250 + i * 100}
+            >
+              <div class="post-img-wrap">
+                <img
+                  src={post.img}
+                  alt={post.title}
+                  class="post-img"
+                  loading="lazy"
+                />
+                <div class="post-overlay" />
+              </div>
+              <div class="post-body">
+                <div class="post-top">
+                  <span class="post-category">{post.category}</span>
+                  <span class="post-num">{post.num}</span>
+                </div>
+                <div class="post-bottom">
+                  <time class="post-date">{post.date}</time>
+                  <h3 class="post-title">{post.title}</h3>
+                  <span class="post-link">
+                    Read
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M5 12h14M13 6l6 6-6 6"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .insights {
+    padding-block: 80px;
+  }
+
+  /* ── header ── */
+  .insights-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 24px;
+  }
+
+  .insights-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .insights-title {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 96px;
+    line-height: 0.9;
+    color: white;
+  }
+
+  .insights-header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+    padding-bottom: 8px;
+  }
+
+  .insights-sub {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    text-align: right;
+  }
+
+  .insights-btn {
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+
+  /* ── grid ── */
+  .insights-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  /* ── shared card ── */
+  .post-card {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .post-img-wrap {
+    position: absolute;
+    inset: 0;
+  }
+
+  .post-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .post-card:hover .post-img {
+    transform: scale(1.06);
+  }
+
+  .post-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(5, 5, 5, 0.97) 0%,
+      rgba(5, 5, 5, 0.55) 40%,
+      rgba(5, 5, 5, 0.15) 100%
+    );
+  }
+
+  .post-body {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px;
+    min-height: inherit;
+  }
+
+  .post-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .post-category {
+    font-family: var(--font-orbitron);
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .post-num {
+    font-family: var(--font-orbitron);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .post-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .post-date {
+    font-family: var(--font-orbitron);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .post-title {
+    font-family: var(--font-orbitron);
+    font-weight: 600;
+    line-height: 1.2;
+    color: white;
+  }
+
+  .post-excerpt {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .post-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-orbitron);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    transition:
+      color 0.2s,
+      gap 0.2s;
+    margin-top: 4px;
+  }
+
+  .post-card:hover .post-link {
+    color: white;
+    gap: 10px;
+  }
+
+  /* ── featured ── */
+  .post-card--featured {
+    min-height: 600px;
+  }
+
+  .post-card--featured .post-title {
+    font-size: 36px;
+  }
+
+  .post-card--featured .post-excerpt {
+    font-size: 15px;
+    max-width: 480px;
+  }
+
+  /* ── stack of 3 ── */
+  .posts-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .post-card--small {
+    flex: 1;
+    min-height: 185px;
+  }
+
+  .post-card--small .post-title {
+    font-size: 16px;
+  }
+
+  .post-card--small .post-body {
+    padding: 18px;
+  }
+
+  @media (max-width: 1024px) {
+    .insights {
+      padding-block: 64px;
+    }
+
+    .insights-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .insights-header-right {
+      align-items: flex-start;
+      padding-bottom: 0;
+    }
+
+    .insights-sub {
+      text-align: left;
+    }
+
+    .insights-title {
+      font-size: 72px;
+      line-height: 1;
+    }
+
+    .insights-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .post-card--featured {
+      min-height: 520px;
+    }
+
+    .post-card--featured .post-title {
+      font-size: 32px;
+    }
+
+    .posts-stack {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .post-card--small {
+      min-height: 220px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .insights {
+      padding-block: 48px;
+    }
+
+    .insights-title {
+      font-size: 44px;
+    }
+
+    .insights-sub {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .post-body {
+      padding: 16px;
+    }
+
+    .post-card--featured {
+      min-height: 420px;
+    }
+
+    .post-card--featured .post-title {
+      font-size: 26px;
+    }
+
+    .post-card--featured .post-excerpt {
+      font-size: 13px;
+      line-height: 1.55;
+      max-width: 100%;
+    }
+
+    .posts-stack {
+      grid-template-columns: 1fr;
+    }
+
+    .post-card--small {
+      min-height: 180px;
+    }
+
+    .post-card--small .post-title {
+      font-size: 15px;
+    }
+  }
+</style>

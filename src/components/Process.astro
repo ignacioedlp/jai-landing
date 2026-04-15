@@ -1,0 +1,350 @@
+---
+const steps = [
+  {
+    title: "Discovery Call",
+    desc: "We start by clarifying the problem, the audience, and the outcome so the entire project has a sharp point of view.",
+    img: "process1.webp",
+  },
+  {
+    title: "Research & Insights",
+    desc: "We map the market, study real behavior, and use the findings to define a practical product strategy.",
+    img: "process2.webp",
+  },
+  {
+    title: "Concept & Design",
+    desc: "Ideas become wireframes, interfaces, and motion studies until the system feels cohesive and usable.",
+    img: "process3.webp",
+  },
+  {
+    title: "Refinement",
+    desc: "We test, refine, and optimize until the experience is fast, clear, and ready to scale.",
+    img: "process4.webp",
+  },
+  {
+    title: "Finalization & Delivery",
+    desc: "We ship with documentation, support, and a clean handoff so your team can keep momentum after launch.",
+    img: "process5.webp",
+  },
+];
+---
+
+<section class="process">
+  <div class="container">
+    <div class="process-heading">
+      <div class="section-label">
+        <span class="dot"></span>
+        <span>OUR PROCESS</span>
+      </div>
+      <div class="process-title-row">
+        <span class="counter">[03]</span>
+        <h2 class="process-title">Process</h2>
+        <span class="year">©2025</span>
+      </div>
+      <p class="process-desc">
+        A simple, collaborative delivery flow that keeps everyone aligned from
+        first conversation to final launch.
+      </p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="process-steps">
+      {steps.map((step, i) => (
+        <div class={`step-row ${i % 2 === 1 ? 'step-row--reversed' : ''}`} data-reveal={i % 2 === 0 ? 'left' : 'right'} data-delay={i * 80}>
+          <!-- image side -->
+          <div class="step-img-wrap">
+            <img src={step.img} alt={step.title} class="step-img" loading="lazy" />
+            <div class="step-img-overlay" aria-hidden="true" />
+          </div>
+
+          <!-- connector -->
+          <div class="step-connector" aria-hidden="true">
+            <div class="connector-line" />
+            <span class="connector-num">0{i + 1}</span>
+          </div>
+
+          <!-- text side -->
+          <div class="step-text">
+            <h3 class="step-title">{step.title}</h3>
+            <p class="step-desc">{step.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .process {
+    padding-block: 80px;
+  }
+
+  .process-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 80px;
+  }
+
+  .process-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .counter,
+  .year {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 19px;
+    color: white;
+  }
+
+  .process-title {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 120px;
+    line-height: 1;
+    color: white;
+    text-align: center;
+    flex: 1;
+  }
+
+  .process-desc {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.6;
+    color: white;
+    text-align: center;
+    max-width: 660px;
+    margin-inline: auto;
+  }
+
+  /* ── zigzag rows ── */
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step-row {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    align-items: center;
+    min-height: 340px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .step-row:first-child {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  /* image left, text right (default) */
+  .step-row .step-img-wrap  { order: 1; }
+  .step-row .step-connector { order: 2; }
+  .step-row .step-text      { order: 3; }
+
+  /* reversed: text left, connector, image right */
+  .step-row--reversed .step-img-wrap  { order: 3; }
+  .step-row--reversed .step-connector { order: 2; }
+  .step-row--reversed .step-text      { order: 1; }
+
+  /* ── image ── */
+  .step-img-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 340px;
+  }
+
+  .step-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .step-row:hover .step-img {
+    transform: scale(1.04);
+  }
+
+  .step-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent 60%, var(--bg) 100%);
+  }
+
+  .step-row--reversed .step-img-overlay {
+    background: linear-gradient(to left, transparent 60%, var(--bg) 100%);
+  }
+
+  /* ── connector ── */
+  .step-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 12px;
+    position: relative;
+  }
+
+  .connector-line {
+    width: 1px;
+    flex: 1;
+    background: var(--border-subtle);
+    max-height: 80px;
+  }
+
+  .connector-num {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  /* ── text ── */
+  .step-text {
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .step-title {
+    font-family: var(--font-orbitron);
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 1.2;
+    color: white;
+  }
+
+  .step-desc {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 420px;
+  }
+
+  .step-row--reversed .step-text {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .step-row--reversed .step-desc {
+    align-self: flex-end;
+  }
+
+  @media (max-width: 1024px) {
+    .process {
+      padding-block: 64px;
+    }
+
+    .process-heading {
+      margin-bottom: 56px;
+    }
+
+    .process-title {
+      font-size: 84px;
+    }
+
+    .process-desc {
+      font-size: 16px;
+    }
+
+    .step-row {
+      min-height: 300px;
+      grid-template-columns: 1fr 56px 1fr;
+    }
+
+    .step-img-wrap {
+      height: 300px;
+    }
+
+    .step-text {
+      padding: 32px 24px;
+    }
+
+    .step-title {
+      font-size: 30px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .process {
+      padding-block: 48px;
+    }
+
+    .process-heading {
+      margin-bottom: 36px;
+    }
+
+    .process-title {
+      font-size: 48px;
+      text-align: left;
+      line-height: 1.05;
+    }
+
+    .process-title-row {
+      gap: 8px;
+    }
+
+    .counter,
+    .year {
+      font-size: 12px;
+    }
+
+    .process-desc {
+      text-align: left;
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 100%;
+      margin-inline: 0;
+    }
+
+    .step-row,
+    .step-row--reversed {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .step-connector {
+      display: none;
+    }
+
+    .step-row .step-img-wrap,
+    .step-row--reversed .step-img-wrap {
+      order: 1;
+    }
+
+    .step-row .step-text,
+    .step-row--reversed .step-text {
+      order: 2;
+      align-items: flex-start;
+      text-align: left;
+      padding: 20px 0 24px;
+    }
+
+    .step-row--reversed .step-desc {
+      align-self: flex-start;
+    }
+
+    .step-img-wrap {
+      height: 220px;
+    }
+
+    .step-title {
+      font-size: 24px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 100%;
+    }
+  }
+</style>

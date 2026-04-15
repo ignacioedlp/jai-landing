@@ -1,0 +1,173 @@
+---
+const portrait = "testimonial.webp";
+const avatar = "testimonial.webp";
+---
+
+<section class="testimonials">
+  <div class="container">
+    <div class="section-label" style="margin-bottom: 48px;" data-reveal="up">
+      <span class="dot"></span>
+      <span>TESTIMONIALS</span>
+    </div>
+
+    <div class="testimonial-card" data-reveal="scale" data-delay="150">
+      <div class="testimonial-portrait" data-reveal="left" data-delay="250">
+        <img src={portrait} alt="Sophie L." />
+      </div>
+      <div class="testimonial-content">
+        <div class="stars">
+          {
+            Array.from({ length: 5 }).map(() => (
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="#fcfcfc">
+                <path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.53.91-5.32L2.27 6.62l5.34-.78L10 1z" />
+              </svg>
+            ))
+          }
+        </div>
+        <blockquote class="testimonial-quote">
+          "JAI turned a vague idea into a focused product experience and helped
+          us launch faster than we expected. The process was sharp from start to
+          finish."
+        </blockquote>
+        <div class="testimonial-author">
+          <img src={avatar} alt="Sophie L." class="author-avatar" />
+          <div>
+            <p class="author-name">Sophie L.</p>
+            <p class="author-role">Founder, Northstar Commerce</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    padding-block: 80px;
+  }
+
+  .testimonial-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .testimonial-portrait {
+    overflow: hidden;
+  }
+
+  .testimonial-portrait img {
+    width: 100%;
+    height: 700px;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .testimonial-content {
+    padding: 60px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    justify-content: center;
+    background: #0a0a0a;
+  }
+
+  .stars {
+    display: flex;
+    gap: 4px;
+  }
+
+  .testimonial-quote {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .author-avatar {
+    width: 53px;
+    height: 53px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .author-name {
+    font-family: var(--font-orbitron);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--text-primary);
+  }
+
+  .author-role {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  @media (max-width: 1024px) {
+    .testimonials {
+      padding-block: 64px;
+    }
+
+    .testimonial-card {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonial-portrait img {
+      height: 480px;
+    }
+
+    .testimonial-content {
+      padding: 40px 32px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .testimonials {
+      padding-block: 48px;
+    }
+
+    .testimonial-portrait img {
+      height: 300px;
+    }
+
+    .testimonial-content {
+      padding: 28px 20px;
+      gap: 24px;
+    }
+
+    .stars svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .testimonial-quote {
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+    }
+
+    .author-name {
+      font-size: 15px;
+    }
+
+    .author-role {
+      font-size: 13px;
+    }
+  }
+</style>

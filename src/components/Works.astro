@@ -1,0 +1,543 @@
+---
+const projects = [
+  {
+    num: "01",
+    title: "Northstar Commerce",
+    tags: ["Ecommerce", "Design System"],
+    desc: "A conversion-focused storefront with custom checkout flows and a flexible visual system.",
+    img: "work1.webp",
+    year: "2025",
+    large: true,
+  },
+  {
+    num: "02",
+    title: "Pulse Health",
+    tags: ["Product Design", "Frontend"],
+    desc: "A patient portal designed to simplify onboarding, scheduling, and ongoing care.",
+    img: "work1.webp",
+    year: "2024",
+    large: false,
+  },
+  {
+    num: "03",
+    title: "Atlas Ops",
+    tags: ["Web App", "Automation"],
+    desc: "An internal operations dashboard for teams that need visibility without complexity.",
+    img: "work1.webp",
+    year: "2024",
+    large: false,
+  },
+  {
+    num: "04",
+    title: "Verve AI",
+    tags: ["MVP", "AI Integration"],
+    desc: "A launch-ready platform prototype that helps founders validate ideas quickly.",
+    img: "work1.webp",
+    year: "2023",
+    large: false,
+  },
+];
+
+const featured = projects[0];
+const rest = projects.slice(1);
+---
+
+<section class="works">
+  <div class="container">
+    <div class="works-heading">
+      <div class="section-label" data-reveal="up">
+        <span class="dot"></span>
+        <span>SELECTED WORK</span>
+      </div>
+      <div class="works-title-row" data-reveal="up" data-delay="100">
+        <span class="counter">[01]</span>
+        <h2 class="works-title">Case Studies</h2>
+        <span class="year-label">©2025</span>
+      </div>
+      <p class="works-desc" data-reveal="up" data-delay="200">
+        A focused selection of product launches, brand systems, and web
+        experiences built for teams that want to move with confidence.
+      </p>
+      <div class="divider"></div>
+    </div>
+
+    <!-- Featured large card -->
+    <a
+      href="#"
+      class="card card--featured"
+      data-reveal="scale"
+      data-delay="300"
+    >
+      <div class="card-img-wrap">
+        <img
+          src={featured.img}
+          alt={featured.title}
+          class="card-img"
+          loading="lazy"
+        />
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="card-num">{featured.num}</span>
+          <div class="card-tags">
+            {featured.tags.map((t) => <span class="card-tag">{t}</span>)}
+          </div>
+          <span class="card-year">{featured.year}</span>
+        </div>
+        <div class="card-bottom">
+          <h3 class="card-title">{featured.title}</h3>
+          <p class="card-desc">{featured.desc}</p>
+          <span class="card-link">
+            View case study
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M5 12h14M13 6l6 6-6 6"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- 3 smaller cards -->
+    <div class="cards-row">
+      {
+        rest.map((p, i) => (
+          <a
+            href="#"
+            class="card card--small"
+            data-reveal="up"
+            data-delay={400 + i * 100}
+          >
+            <div class="card-img-wrap">
+              <img src={p.img} alt={p.title} class="card-img" loading="lazy" />
+              <div class="card-overlay" />
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-num">{p.num}</span>
+                <div class="card-tags">
+                  {p.tags.map((t) => (
+                    <span class="card-tag">{t}</span>
+                  ))}
+                </div>
+                <span class="card-year">{p.year}</span>
+              </div>
+              <div class="card-bottom">
+                <h3 class="card-title">{p.title}</h3>
+                <p class="card-desc">{p.desc}</p>
+                <span class="card-link">
+                  View case study
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M5 12h14M13 6l6 6-6 6"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <!-- footer CTA -->
+    <div class="works-footer">
+      <div class="btn-bracketed">
+        <span class="bracket" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"
+            ><path
+              d="M9 6l6 6-6 6"
+              stroke="white"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+          <svg viewBox="0 0 24 24" fill="none"
+            ><path
+              d="M9 6l6 6-6 6"
+              stroke="white"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+          <svg viewBox="0 0 24 24" fill="none"
+            ><path
+              d="M9 6l6 6-6 6"
+              stroke="white"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+        </span>
+        <a href="#" class="btn">
+          <span>VIEW ALL CASE STUDIES</span>
+          <span class="btn-icon">
+            <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M2 7h10M8 3l4 4-4 4"
+                stroke="black"
+                stroke-width="1.5"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+          </span>
+        </a>
+        <span class="bracket right" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"
+            ><path
+              d="M15 6l-6 6 6 6"
+              stroke="white"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+          <svg viewBox="0 0 24 24" fill="none"
+            ><path
+              d="M15 6l-6 6 6 6"
+              stroke="white"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+          <svg viewBox="0 0 24 24" fill="none"
+            ><path
+              d="M15 6l-6 6 6 6"
+              stroke="white"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path></svg
+          >
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .works {
+    padding-block: 80px;
+  }
+
+  .works-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .works-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .counter,
+  .year-label {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 19px;
+    color: white;
+  }
+
+  .works-title {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 120px;
+    line-height: 1;
+    color: white;
+    text-align: center;
+    flex: 1;
+  }
+
+  .works-desc {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.6;
+    color: white;
+    text-align: center;
+    max-width: 660px;
+    margin-inline: auto;
+  }
+
+  /* ── shared card base ── */
+  .card {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .card-img-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card:hover .card-img {
+    transform: scale(1.05);
+  }
+
+  /* dark gradient from bottom */
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(5, 5, 5, 0.92) 0%,
+      rgba(5, 5, 5, 0.3) 45%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  /* text sits on top of image via absolute */
+  .card-body {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .card-num {
+    font-family: var(--font-orbitron);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .card-tag {
+    font-family: var(--font-orbitron);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .card-year {
+    font-family: var(--font-orbitron);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .card-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .card-title {
+    font-family: var(--font-orbitron);
+    font-weight: 600;
+    color: white;
+    line-height: 1.15;
+  }
+
+  .card-desc {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 480px;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-orbitron);
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.55);
+    transition:
+      color 0.2s,
+      gap 0.2s;
+    margin-top: 4px;
+  }
+
+  .card:hover .card-link {
+    color: white;
+    gap: 10px;
+  }
+
+  /* ── featured card ── */
+  .card--featured {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .card--featured .card-img-wrap {
+    height: 520px;
+  }
+
+  .card--featured .card-title {
+    font-size: 48px;
+  }
+
+  .card--featured .card-desc {
+    font-size: 15px;
+  }
+
+  /* ── 3-col row ── */
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .card--small .card-img-wrap {
+    height: 320px;
+  }
+
+  .card--small .card-title {
+    font-size: 22px;
+  }
+
+  /* ── footer ── */
+  .works-footer {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width: 1024px) {
+    .works {
+      padding-block: 64px;
+    }
+
+    .works-title {
+      font-size: 84px;
+    }
+
+    .works-desc {
+      font-size: 16px;
+      max-width: 620px;
+    }
+
+    .card--featured .card-img-wrap {
+      height: 440px;
+    }
+
+    .card--featured .card-title {
+      font-size: 40px;
+    }
+
+    .cards-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .works {
+      padding-block: 48px;
+    }
+
+    .works-heading {
+      margin-bottom: 36px;
+      gap: 10px;
+    }
+
+    .works-title {
+      font-size: 46px;
+      text-align: left;
+      line-height: 1.05;
+    }
+
+    .works-title-row {
+      gap: 8px;
+    }
+
+    .counter,
+    .year-label {
+      font-size: 12px;
+    }
+
+    .works-desc {
+      text-align: left;
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 100%;
+      margin-inline: 0;
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+
+    .card-meta {
+      flex-wrap: wrap;
+      row-gap: 8px;
+    }
+
+    .card-tags {
+      flex-wrap: wrap;
+      flex-basis: 100%;
+    }
+
+    .card--featured .card-img-wrap {
+      height: 360px;
+    }
+
+    .card--featured .card-title {
+      font-size: 30px;
+    }
+
+    .card--featured .card-desc,
+    .card-desc {
+      font-size: 13px;
+      line-height: 1.55;
+      max-width: 100%;
+    }
+
+    .cards-row {
+      grid-template-columns: 1fr;
+      margin-bottom: 32px;
+    }
+
+    .card--small .card-img-wrap {
+      height: 260px;
+    }
+
+    .card--small .card-title {
+      font-size: 20px;
+    }
+  }
+</style>

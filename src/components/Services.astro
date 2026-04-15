@@ -1,0 +1,321 @@
+---
+const serviceImg =
+  "https://images.unsplash.com/photo-1542744094-3a31f272c490?q=80&w=1470&auto=format&fit=crop";
+
+const services = [
+  {
+    number: "1",
+    title: "Backend Development",
+    desc: "We build stable backend foundations with clean APIs, reliable data flows, and integrations that hold up as products scale.",
+    tags: ["Node.js", "Python", "Ruby on Rails"],
+    img: "services1.webp",
+  },
+  {
+    number: "2",
+    title: "Frontend Development",
+    desc: "We design and ship fast, accessible interfaces that translate strategy into a crisp product experience.",
+    tags: ["React", "Vue.js", "Angular"],
+    img: "services2.webp",
+  },
+  {
+    number: "3",
+    title: "Mobile App Development",
+    desc: "We create native-feeling mobile apps that help teams reach users wherever they are.",
+    tags: ["React Native", "iOS", "Android"],
+    img: "services3.webp",
+  },
+  {
+    number: "4",
+    title: "Security Auditing",
+    desc: "We review surface area, permissions, and deployment practices to help teams reduce risk before launch.",
+    tags: ["Penetration Testing", "Vulnerability Assessment", "Compliance"],
+    img: "services4.webp",
+  },
+  {
+    number: "5",
+    title: "Technology Consulting",
+    desc: "We help founders and internal teams choose the right stack, roadmap, and delivery model for the next stage.",
+    tags: ["Digital Strategy", "Technology Roadmap", "Innovation"],
+    img: "services5.webp",
+  },
+  {
+    number: "6",
+    title: "Artificial Intelligence Solutions",
+    desc: "We prototype AI workflows and product features that automate work and unlock new value for customers.",
+    tags: [
+      "Machine Learning",
+      "Natural Language Processing",
+      "Computer Vision",
+    ],
+    img: "services6.webp",
+  },
+];
+---
+
+<section class="services">
+  <div class="container">
+    <div class="services-heading">
+      <div class="section-label" data-reveal="up">
+        <span class="dot"></span>
+        <span>SERVICES</span>
+      </div>
+      <div class="services-title-row" data-reveal="up" data-delay="100">
+        <span class="counter">[02]</span>
+        <h2 class="services-title">Services</h2>
+        <span class="year">©2025</span>
+      </div>
+      <p class="services-desc" data-reveal="up" data-delay="200">
+        A compact studio model that covers strategy, design, engineering, and
+        launch support under one roof.
+      </p>
+      <div class="divider" data-reveal="line"></div>
+    </div>
+
+    {
+      services.map((service, i) => (
+        <div class="service-card">
+          <div class="service-content">
+            <div class="service-number-badge">
+              <span>{service.number}</span>
+            </div>
+            <div class="service-body">
+              <h3 class="service-title">{service.title}</h3>
+              <p class="service-desc">{service.desc}</p>
+            </div>
+            <div class="service-tags">
+              {service.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+          <div class="service-img-wrap">
+            <img src={service.img} alt={service.title} class="service-img" />
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .services {
+    padding-block: 80px;
+  }
+
+  .services-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .services-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .counter,
+  .year {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 19px;
+    color: white;
+  }
+
+  .services-title {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 120px;
+    line-height: 1;
+    color: white;
+    text-align: center;
+    flex: 1;
+  }
+
+  .services-desc {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.6;
+    color: white;
+    text-align: center;
+    max-width: 747px;
+    margin-inline: auto;
+  }
+
+  .service-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    will-change: transform, opacity;
+  }
+
+  .service-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .service-number-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid white;
+    border-radius: 54px;
+    font-family: var(--font-inter);
+    font-weight: 300;
+    font-size: 20px;
+    color: white;
+  }
+
+  .service-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .service-title {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 48px;
+    color: white;
+    line-height: 1.3;
+  }
+
+  .service-desc {
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+
+  .tag {
+    background: white;
+    color: black;
+    font-family: var(--font-orbitron);
+    font-weight: 400;
+    font-size: 15px;
+    padding: 10px 11px;
+    border-radius: 35px;
+    border: 1px solid white;
+  }
+
+  .service-img-wrap {
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  .service-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 1024px) {
+    .services {
+      padding-block: 64px;
+    }
+
+    .services-title {
+      font-size: 84px;
+    }
+
+    .services-desc {
+      font-size: 16px;
+    }
+
+    .service-card {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 28px;
+    }
+
+    .service-img-wrap {
+      height: 280px;
+    }
+
+    .service-title {
+      font-size: 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .services {
+      padding-block: 48px;
+    }
+
+    .services-heading {
+      margin-bottom: 36px;
+    }
+
+    .services-title {
+      font-size: 48px;
+      text-align: left;
+      line-height: 1.05;
+    }
+
+    .services-title-row {
+      gap: 8px;
+    }
+
+    .counter,
+    .year {
+      font-size: 12px;
+    }
+
+    .services-desc {
+      text-align: left;
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 100%;
+      margin-inline: 0;
+    }
+
+    .service-card {
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .service-content {
+      gap: 20px;
+    }
+
+    .service-number-badge {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+    }
+
+    .service-title {
+      font-size: 30px;
+      line-height: 1.2;
+    }
+
+    .service-desc {
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 8px 10px;
+    }
+
+    .service-img-wrap {
+      height: 220px;
+    }
+  }
+</style>

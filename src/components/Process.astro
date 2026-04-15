@@ -1,48 +1,103 @@
 ---
-const steps = [
-  {
-    title: "Discovery Call",
-    desc: "We start by clarifying the problem, the audience, and the outcome so the entire project has a sharp point of view.",
-    img: "process1.webp",
+import { Image } from "astro:assets";
+import { type Locale } from "@/i18n/config";
+import process1 from "@/assets/process1.webp";
+import process2 from "@/assets/process2.webp";
+import process3 from "@/assets/process3.webp";
+import process4 from "@/assets/process4.webp";
+import process5 from "@/assets/process5.webp";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const copy = {
+  en: {
+    section: "OUR PROCESS",
+    title: "Process",
+    desc: "A simple, collaborative delivery flow that keeps everyone aligned from first conversation to final launch.",
+    steps: [
+      {
+        title: "Discovery Call",
+        desc: "We start by clarifying the problem, the audience, and the outcome so the entire project has a sharp point of view.",
+        img: process1,
+      },
+      {
+        title: "Research & Insights",
+        desc: "We map the market, study real behavior, and use the findings to define a practical product strategy.",
+        img: process2,
+      },
+      {
+        title: "Concept & Design",
+        desc: "Ideas become wireframes, interfaces, and motion studies until the system feels cohesive and usable.",
+        img: process3,
+      },
+      {
+        title: "Refinement",
+        desc: "We test, refine, and optimize until the experience is fast, clear, and ready to scale.",
+        img: process4,
+      },
+      {
+        title: "Finalization & Delivery",
+        desc: "We ship with documentation, support, and a clean handoff so your team can keep momentum after launch.",
+        img: process5,
+      },
+    ],
   },
-  {
-    title: "Research & Insights",
-    desc: "We map the market, study real behavior, and use the findings to define a practical product strategy.",
-    img: "process2.webp",
+  es: {
+    section: "NUESTRO PROCESO",
+    title: "Proceso",
+    desc: "Un flujo de entrega simple y colaborativo que mantiene a todos alineados desde la primera conversacion hasta el lanzamiento final.",
+    steps: [
+      {
+        title: "Llamada de Discovery",
+        desc: "Empezamos aclarando el problema, la audiencia y el objetivo para que todo el proyecto tenga una direccion precisa.",
+        img: process1,
+      },
+      {
+        title: "Investigacion e Insights",
+        desc: "Mapeamos el mercado, estudiamos comportamiento real y usamos esos hallazgos para definir una estrategia practica.",
+        img: process2,
+      },
+      {
+        title: "Concepto y Diseno",
+        desc: "Las ideas se convierten en wireframes, interfaces y motion studies hasta que el sistema se siente coherente y usable.",
+        img: process3,
+      },
+      {
+        title: "Refinamiento",
+        desc: "Probamos, ajustamos y optimizamos hasta que la experiencia es rapida, clara y lista para escalar.",
+        img: process4,
+      },
+      {
+        title: "Entrega Final",
+        desc: "Lanzamos con documentacion, soporte y un handoff limpio para que tu equipo mantenga el impulso despues del lanzamiento.",
+        img: process5,
+      },
+    ],
   },
-  {
-    title: "Concept & Design",
-    desc: "Ideas become wireframes, interfaces, and motion studies until the system feels cohesive and usable.",
-    img: "process3.webp",
-  },
-  {
-    title: "Refinement",
-    desc: "We test, refine, and optimize until the experience is fast, clear, and ready to scale.",
-    img: "process4.webp",
-  },
-  {
-    title: "Finalization & Delivery",
-    desc: "We ship with documentation, support, and a clean handoff so your team can keep momentum after launch.",
-    img: "process5.webp",
-  },
-];
+} as const;
+
+const t = copy[lang];
+const steps = t.steps;
 ---
 
-<section class="process">
+<section class="process" id="process">
   <div class="container">
     <div class="process-heading">
       <div class="section-label">
         <span class="dot"></span>
-        <span>OUR PROCESS</span>
+        <span>{t.section}</span>
       </div>
       <div class="process-title-row">
         <span class="counter">[03]</span>
-        <h2 class="process-title">Process</h2>
+        <h2 class="process-title">{t.title}</h2>
         <span class="year">©2025</span>
       </div>
       <p class="process-desc">
-        A simple, collaborative delivery flow that keeps everyone aligned from
-        first conversation to final launch.
+        {t.desc}
       </p>
       <div class="divider"></div>
     </div>
@@ -52,7 +107,15 @@ const steps = [
         <div class={`step-row ${i % 2 === 1 ? 'step-row--reversed' : ''}`} data-reveal={i % 2 === 0 ? 'left' : 'right'} data-delay={i * 80}>
           <!-- image side -->
           <div class="step-img-wrap">
-            <img src={step.img} alt={step.title} class="step-img" loading="lazy" />
+            <Image
+              src={step.img}
+              alt={step.title}
+              class="step-img"
+              loading="lazy"
+              decoding="async"
+              widths={[480, 768, 1024]}
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
             <div class="step-img-overlay" aria-hidden="true" />
           </div>
 

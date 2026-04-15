@@ -1,79 +1,141 @@
 ---
-const projects = [
-  {
-    num: "01",
-    title: "Northstar Commerce",
-    tags: ["Ecommerce", "Design System"],
-    desc: "A conversion-focused storefront with custom checkout flows and a flexible visual system.",
-    img: "work1.webp",
-    year: "2025",
-    large: true,
+import { Image } from "astro:assets";
+import { type Locale, withLocale } from "@/i18n/config";
+import work1 from "@/assets/work1.webp";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const workImage = work1;
+
+const copy = {
+  en: {
+    section: "SELECTED WORK",
+    title: "Case Studies",
+    desc: "A focused selection of product launches, brand systems, and web experiences built for teams that want to move with confidence.",
+    viewCase: "View case study",
+    allCases: "VIEW ALL CASE STUDIES",
+    projects: [
+      {
+        num: "01",
+        title: "Northstar Commerce",
+        tags: ["Ecommerce", "Design System"],
+        desc: "A conversion-focused storefront with custom checkout flows and a flexible visual system.",
+        img: workImage,
+        year: "2025",
+      },
+      {
+        num: "02",
+        title: "Pulse Health",
+        tags: ["Product Design", "Frontend"],
+        desc: "A patient portal designed to simplify onboarding, scheduling, and ongoing care.",
+        img: workImage,
+        year: "2024",
+      },
+      {
+        num: "03",
+        title: "Atlas Ops",
+        tags: ["Web App", "Automation"],
+        desc: "An internal operations dashboard for teams that need visibility without complexity.",
+        img: workImage,
+        year: "2024",
+      },
+      {
+        num: "04",
+        title: "Verve AI",
+        tags: ["MVP", "AI Integration"],
+        desc: "A launch-ready platform prototype that helps founders validate ideas quickly.",
+        img: workImage,
+        year: "2023",
+      },
+    ],
   },
-  {
-    num: "02",
-    title: "Pulse Health",
-    tags: ["Product Design", "Frontend"],
-    desc: "A patient portal designed to simplify onboarding, scheduling, and ongoing care.",
-    img: "work1.webp",
-    year: "2024",
-    large: false,
+  es: {
+    section: "PROYECTOS DESTACADOS",
+    title: "Casos de Estudio",
+    desc: "Una seleccion enfocada de lanzamientos de producto, sistemas de marca y experiencias web para equipos que quieren avanzar con confianza.",
+    viewCase: "Ver caso",
+    allCases: "VER TODOS LOS CASOS",
+    projects: [
+      {
+        num: "01",
+        title: "Northstar Commerce",
+        tags: ["Ecommerce", "Sistema de Diseno"],
+        desc: "Un storefront orientado a conversion con flujos de checkout personalizados y un sistema visual flexible.",
+        img: workImage,
+        year: "2025",
+      },
+      {
+        num: "02",
+        title: "Pulse Health",
+        tags: ["Diseno de Producto", "Frontend"],
+        desc: "Un portal de pacientes para simplificar onboarding, turnos y seguimiento continuo.",
+        img: workImage,
+        year: "2024",
+      },
+      {
+        num: "03",
+        title: "Atlas Ops",
+        tags: ["Web App", "Automatizacion"],
+        desc: "Un dashboard interno para equipos que necesitan visibilidad sin complejidad.",
+        img: workImage,
+        year: "2024",
+      },
+      {
+        num: "04",
+        title: "Verve AI",
+        tags: ["MVP", "Integracion AI"],
+        desc: "Un prototipo de plataforma listo para lanzamiento que ayuda a validar ideas rapidamente.",
+        img: workImage,
+        year: "2023",
+      },
+    ],
   },
-  {
-    num: "03",
-    title: "Atlas Ops",
-    tags: ["Web App", "Automation"],
-    desc: "An internal operations dashboard for teams that need visibility without complexity.",
-    img: "work1.webp",
-    year: "2024",
-    large: false,
-  },
-  {
-    num: "04",
-    title: "Verve AI",
-    tags: ["MVP", "AI Integration"],
-    desc: "A launch-ready platform prototype that helps founders validate ideas quickly.",
-    img: "work1.webp",
-    year: "2023",
-    large: false,
-  },
-];
+} as const;
+
+const t = copy[lang];
+const projects = t.projects;
 
 const featured = projects[0];
 const rest = projects.slice(1);
 ---
 
-<section class="works">
+<section class="works" id="work">
   <div class="container">
     <div class="works-heading">
       <div class="section-label" data-reveal="up">
         <span class="dot"></span>
-        <span>SELECTED WORK</span>
+        <span>{t.section}</span>
       </div>
       <div class="works-title-row" data-reveal="up" data-delay="100">
         <span class="counter">[01]</span>
-        <h2 class="works-title">Case Studies</h2>
+        <h2 class="works-title">{t.title}</h2>
         <span class="year-label">©2025</span>
       </div>
       <p class="works-desc" data-reveal="up" data-delay="200">
-        A focused selection of product launches, brand systems, and web
-        experiences built for teams that want to move with confidence.
+        {t.desc}
       </p>
       <div class="divider"></div>
     </div>
 
     <!-- Featured large card -->
     <a
-      href="#"
+      href={withLocale(lang, "/blog")}
       class="card card--featured"
       data-reveal="scale"
       data-delay="300"
     >
       <div class="card-img-wrap">
-        <img
+        <Image
           src={featured.img}
           alt={featured.title}
           class="card-img"
           loading="lazy"
+          decoding="async"
+          widths={[640, 960, 1280]}
+          sizes="(max-width: 768px) 100vw, 92vw"
         />
         <div class="card-overlay"></div>
       </div>
@@ -89,7 +151,7 @@ const rest = projects.slice(1);
           <h3 class="card-title">{featured.title}</h3>
           <p class="card-desc">{featured.desc}</p>
           <span class="card-link">
-            View case study
+            {t.viewCase}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path
                 d="M5 12h14M13 6l6 6-6 6"
@@ -108,13 +170,21 @@ const rest = projects.slice(1);
       {
         rest.map((p, i) => (
           <a
-            href="#"
+            href={withLocale(lang, "/blog")}
             class="card card--small"
             data-reveal="up"
             data-delay={400 + i * 100}
           >
             <div class="card-img-wrap">
-              <img src={p.img} alt={p.title} class="card-img" loading="lazy" />
+              <Image
+                src={p.img}
+                alt={p.title}
+                class="card-img"
+                loading="lazy"
+                decoding="async"
+                widths={[480, 768, 960]}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
               <div class="card-overlay" />
             </div>
             <div class="card-body">
@@ -131,7 +201,7 @@ const rest = projects.slice(1);
                 <h3 class="card-title">{p.title}</h3>
                 <p class="card-desc">{p.desc}</p>
                 <span class="card-link">
-                  View case study
+                  {t.viewCase}
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                     <path
                       d="M5 12h14M13 6l6 6-6 6"
@@ -178,8 +248,8 @@ const rest = projects.slice(1);
               stroke-linejoin="round"></path></svg
           >
         </span>
-        <a href="#" class="btn">
-          <span>VIEW ALL CASE STUDIES</span>
+        <a href={withLocale(lang, "/blog")} class="btn">
+          <span>{t.allCases}</span>
           <span class="btn-icon">
             <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
               <path

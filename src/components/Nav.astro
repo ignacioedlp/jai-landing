@@ -1,10 +1,38 @@
 ---
+import { type Locale, withLocale } from "@/i18n/config";
 
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const copy = {
+  en: {
+    home: "Home",
+    services: "Services",
+    work: "Work",
+    process: "Process",
+    blog: "Blog",
+    cta: "GET IN TOUCH",
+  },
+  es: {
+    home: "Inicio",
+    services: "Servicios",
+    work: "Proyectos",
+    process: "Proceso",
+    blog: "Blog",
+    cta: "CONTACTAR",
+  },
+} as const;
+
+const t = copy[lang];
+const basePath = withLocale(lang, "/");
 ---
 
 <header class="nav-header">
   <nav class="nav-container container">
-    <a href="/" class="nav-logo">
+    <a href={basePath} class="nav-logo">
       <!-- inline handshake icon -->
       <svg
         width="25"
@@ -24,26 +52,35 @@
     </a>
 
     <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Services</a></li>
-      <li><a href="#">Work</a></li>
-      <li><a href="#">Process</a></li>
+      <li><a href={`${basePath}#home`}>{t.home}</a></li>
+      <li><a href={`${basePath}#services`}>{t.services}</a></li>
+      <li><a href={`${basePath}#work`}>{t.work}</a></li>
+      <li><a href={`${basePath}#process`}>{t.process}</a></li>
+      <li><a href={withLocale(lang, "/blog")}>{t.blog}</a></li>
     </ul>
 
-    <a href="#" class="btn btn-nav">
-      <span>GET IN TOUCH</span>
-      <span class="btn-icon">
-        <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M2 7h10M8 3l4 4-4 4"
-            stroke="black"
-            stroke-width="1.5"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-        </svg>
-      </span>
-    </a>
+    <div class="nav-actions">
+      <div class="lang-switch" aria-label="Language switcher">
+        <a href="/en/" aria-current={lang === "en" ? "page" : undefined}>EN</a>
+        <span>/</span>
+        <a href="/es/" aria-current={lang === "es" ? "page" : undefined}>ES</a>
+      </div>
+
+      <a href="mailto:hello@jai.studio" class="btn btn-nav">
+        <span>{t.cta}</span>
+        <span class="btn-icon">
+          <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M2 7h10M8 3l4 4-4 4"
+              stroke="black"
+              stroke-width="1.5"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </span>
+      </a>
+    </div>
   </nav>
 </header>
 
@@ -126,6 +163,26 @@
     padding: 6px 10px;
   }
 
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-orbitron);
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+  }
+
+  .lang-switch a[aria-current="page"] {
+    color: var(--text-primary);
+  }
+
   .btn-nav .btn-icon {
     width: 31px;
     height: 31px;
@@ -138,6 +195,10 @@
 
     .logo-text {
       font-size: 20px;
+    }
+
+    .lang-switch {
+      font-size: 10px;
     }
   }
 
@@ -167,6 +228,10 @@
     .btn-nav .btn-icon svg {
       width: 11px;
       height: 11px;
+    }
+
+    .nav-actions {
+      gap: 10px;
     }
   }
 

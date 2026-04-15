@@ -1,20 +1,54 @@
 ---
+import {
+  defaultLocale,
+  locales,
+  stripLocale,
+  type Locale,
+} from "@/i18n/config";
+
 interface Props {
+  lang?: Locale;
   title?: string;
   description?: string;
   image?: string;
   canonical?: string;
 }
+
+const siteUrl = Astro.site ?? new URL("https://jai.studio");
+const localePath = stripLocale(Astro.url.pathname);
+
 const {
+  lang = defaultLocale,
   title = "JAI — Digital Product Studio",
   description = "JAI is a product and development agency that designs, builds, and ships high-performing digital experiences for ambitious brands.",
   image = "/og-image.png",
-  canonical = "https://jai.studio",
+  canonical,
 } = Astro.props;
+
+const canonicalPath = `/${lang}${localePath === "/" ? "/" : localePath}`;
+const canonicalUrl = canonical ?? new URL(canonicalPath, siteUrl).toString();
+
+const localeToOg: Record<Locale, string> = {
+  en: "en_US",
+  es: "es_ES",
+};
+
+const alternateLinks = locales.map((locale) => ({
+  locale,
+  href: new URL(
+    `/${locale}${localePath === "/" ? "/" : localePath}`,
+    siteUrl,
+  ).toString(),
+}));
+
+const xDefaultHref = new URL(
+  `/${defaultLocale}${localePath === "/" ? "/" : localePath}`,
+  siteUrl,
+).toString();
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,15 +57,21 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href={canonical} />
+    <link rel="canonical" href={canonicalUrl} />
+    {
+      alternateLinks.map((alt) => (
+        <link rel="alternate" hreflang={alt.locale} href={alt.href} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={localeToOg[lang]} />
     <meta property="og:site_name" content="JAI" />
 
     <!-- Twitter / X -->
@@ -239,12 +279,12 @@ const {
 
   /* ── Blue ambient glows ── */
   .glow {
-    position: fixed;
+    position: absolute;
     border-radius: 50%;
     pointer-events: none;
     z-index: 0;
-    filter: blur(120px);
-    opacity: 0.18;
+    filter: blur(80px);
+    opacity: 0.12;
   }
 
   .glow-1 {
@@ -261,7 +301,7 @@ const {
     background: radial-gradient(circle, #3b0fd4 0%, transparent 70%);
     top: 35vh;
     right: -8vw;
-    opacity: 0.14;
+    opacity: 0.1;
   }
 
   .glow-3 {
@@ -270,7 +310,7 @@ const {
     background: radial-gradient(ellipse, #0050ff 0%, transparent 65%);
     top: 65vh;
     left: 20vw;
-    opacity: 0.1;
+    opacity: 0.08;
   }
 
   .glow-4 {
@@ -279,7 +319,7 @@ const {
     background: radial-gradient(circle, #2563ff 0%, transparent 70%);
     bottom: 10vh;
     right: 5vw;
-    opacity: 0.12;
+    opacity: 0.08;
   }
 
   @media (max-width: 1024px) {
@@ -321,8 +361,8 @@ const {
     }
 
     .glow {
-      filter: blur(90px);
-      opacity: 0.14;
+      filter: blur(70px);
+      opacity: 0.1;
     }
 
     .glow-1,
@@ -334,7 +374,6 @@ const {
     }
   }
 
-  /* glows scroll with page on mobile, fixed on desktop */
   @media (max-width: 768px) {
     .glow {
       position: absolute;

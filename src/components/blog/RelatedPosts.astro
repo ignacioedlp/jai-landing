@@ -1,0 +1,95 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { Locale } from "@/i18n/config";
+import { withLocale } from "@/i18n/config";
+
+interface Props {
+  posts: CollectionEntry<"blog">[];
+  lang: Locale;
+}
+
+const { posts, lang } = Astro.props;
+
+const copy = {
+  en: {
+    title: "Related articles",
+    cta: "Read article",
+  },
+  es: {
+    title: "Articulos relacionados",
+    cta: "Leer articulo",
+  },
+} as const;
+
+const t = copy[lang];
+---
+
+{
+  posts.length > 0 && (
+    <section class="related" data-reveal="up">
+      <h2>{t.title}</h2>
+      <div class="related-grid">
+        {posts.map((post) => (
+          <article>
+            <a href={withLocale(lang, `/blog/${post.slug}`)}>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.description}</p>
+              <span>{t.cta}</span>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .related {
+    margin-top: 70px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .related h2 {
+    font-family: var(--font-orbitron);
+    font-size: 28px;
+    margin-bottom: 22px;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .related-grid article {
+    border: 1px solid var(--border-subtle);
+    padding: 20px;
+  }
+
+  .related-grid h3 {
+    font-family: var(--font-orbitron);
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .related-grid p {
+    font-family: var(--font-orbitron);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .related-grid span {
+    font-family: var(--font-orbitron);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

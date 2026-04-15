@@ -1,0 +1,32 @@
+---
+import BlogPost from "@/layouts/BlogPost.astro";
+import {
+  estimateReadingTime,
+  getPublishedPostsByLocale,
+  getRelatedPosts,
+  type BlogEntry,
+} from "@/lib/blog";
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPostsByLocale("en");
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post, posts },
+  }));
+}
+
+interface Props {
+  post: BlogEntry;
+  posts: BlogEntry[];
+}
+
+const { post, posts } = Astro.props;
+const { Content } = await post.render();
+const related = getRelatedPosts(post, posts, 2);
+const readingTime = estimateReadingTime(post.body);
+---
+
+<BlogPost lang="en" post={post} related={related} readingTime={readingTime}>
+  <Content />
+</BlogPost>

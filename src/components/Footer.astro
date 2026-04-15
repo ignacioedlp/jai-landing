@@ -1,9 +1,52 @@
 ---
-const blurSvg = "";
+import { type Locale, withLocale } from "@/i18n/config";
 
-const col1 = ["About", "Services", "Work"];
-const col2 = ["Contact", "Process", "Notes"];
-const col3 = ["X (Twitter)", "Instagram", "LinkedIn"];
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const copy = {
+  en: {
+    bio: "Digital product studio building websites, apps, and platforms for ambitious teams.",
+    credit:
+      "A product and development agency focused on strategy, design, and launch.",
+    col1: [
+      { label: "About", href: withLocale(lang, "/#home") },
+      { label: "Services", href: withLocale(lang, "/#services") },
+      { label: "Work", href: withLocale(lang, "/#work") },
+    ],
+    col2: [
+      { label: "Contact", href: "mailto:hello@jai.studio" },
+      { label: "Process", href: withLocale(lang, "/#process") },
+      { label: "Blog", href: withLocale(lang, "/blog") },
+    ],
+  },
+  es: {
+    bio: "Estudio de producto digital que construye sitios, apps y plataformas para equipos ambiciosos.",
+    credit:
+      "Una agencia de producto y desarrollo enfocada en estrategia, diseno y lanzamiento.",
+    col1: [
+      { label: "Nosotros", href: withLocale(lang, "/#home") },
+      { label: "Servicios", href: withLocale(lang, "/#services") },
+      { label: "Proyectos", href: withLocale(lang, "/#work") },
+    ],
+    col2: [
+      { label: "Contacto", href: "mailto:hello@jai.studio" },
+      { label: "Proceso", href: withLocale(lang, "/#process") },
+      { label: "Blog", href: withLocale(lang, "/blog") },
+    ],
+  },
+} as const;
+
+const social = [
+  { label: "X (Twitter)", href: "https://x.com" },
+  { label: "Instagram", href: "https://instagram.com" },
+  { label: "LinkedIn", href: "https://linkedin.com" },
+];
+
+const t = copy[lang];
 ---
 
 <footer class="footer">
@@ -14,8 +57,7 @@ const col3 = ["X (Twitter)", "Instagram", "LinkedIn"];
     <div class="footer-nav">
       <div class="footer-bio" data-reveal="left">
         <p class="footer-bio-text">
-          Digital product studio building websites, apps, and platforms for
-          ambitious teams.
+          {t.bio}
         </p>
         <p class="footer-logo">JAI Studio</p>
       </div>
@@ -23,27 +65,29 @@ const col3 = ["X (Twitter)", "Instagram", "LinkedIn"];
       <div class="footer-links" data-reveal="right" data-delay="150">
         <ul>
           {
-            col1.map((link) => (
+            t.col1.map((link) => (
               <li>
-                <a href="#">{link}</a>
+                <a href={link.href}>{link.label}</a>
               </li>
             ))
           }
         </ul>
         <ul>
           {
-            col2.map((link) => (
+            t.col2.map((link) => (
               <li>
-                <a href="#">{link}</a>
+                <a href={link.href}>{link.label}</a>
               </li>
             ))
           }
         </ul>
         <ul>
           {
-            col3.map((link) => (
+            social.map((link) => (
               <li>
-                <a href="#">{link}</a>
+                <a href={link.href} target="_blank" rel="noopener noreferrer">
+                  {link.label}
+                </a>
               </li>
             ))
           }
@@ -53,8 +97,7 @@ const col3 = ["X (Twitter)", "Instagram", "LinkedIn"];
 
     <div class="footer-bar">
       <p class="footer-credit">
-        A product and development agency focused on strategy, design, and
-        launch.
+        {t.credit}
       </p>
     </div>
 

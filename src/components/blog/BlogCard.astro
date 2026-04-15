@@ -1,0 +1,128 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import type { Locale } from "@/i18n/config";
+import { withLocale } from "@/i18n/config";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  lang: Locale;
+}
+
+const { post, lang } = Astro.props;
+
+const formatter = new Intl.DateTimeFormat(lang === "es" ? "es-AR" : "en-US", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+});
+
+const href = withLocale(lang, `/blog/${post.slug}`);
+---
+
+<article class="blog-card" data-reveal="up">
+  <a href={href} class="cover-link" aria-label={post.data.title}>
+    <Image
+      src={post.data.image}
+      alt={post.data.imageAlt}
+      loading="lazy"
+      decoding="async"
+      widths={[480, 768, 1024]}
+      sizes="(max-width: 768px) 100vw, 50vw"
+    />
+  </a>
+  <div class="content">
+    <p class="meta">
+      <span>{post.data.category ?? "Insights"}</span>
+      <span>•</span>
+      <time>{formatter.format(post.data.publishDate)}</time>
+    </p>
+    <h3><a href={href}>{post.data.title}</a></h3>
+    <p class="desc">{post.data.description}</p>
+    <ul class="tags">
+      {(post.data.tags ?? []).slice(0, 3).map((tag) => <li>{tag}</li>)}
+    </ul>
+  </div>
+</article>
+
+<style>
+  .blog-card {
+    border: 1px solid var(--border-subtle);
+    background: rgba(10, 10, 10, 0.5);
+    overflow: hidden;
+  }
+
+  .cover-link {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .cover-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .blog-card:hover img {
+    transform: scale(1.04);
+  }
+
+  .content {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .meta {
+    font-family: var(--font-orbitron);
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    display: inline-flex;
+    gap: 8px;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    font-family: var(--font-orbitron);
+    font-size: 24px;
+    line-height: 1.25;
+    font-weight: 500;
+  }
+
+  .desc {
+    font-family: var(--font-orbitron);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  .tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tags li {
+    font-family: var(--font-orbitron);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    h3 {
+      font-size: 20px;
+    }
+
+    .content {
+      padding: 16px;
+    }
+  }
+</style>

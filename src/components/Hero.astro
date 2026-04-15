@@ -1,25 +1,62 @@
 ---
-const heroBg = "hero.webp";
+import { Image } from "astro:assets";
+import { type Locale, withLocale } from "@/i18n/config";
+import heroBg from "@/assets/hero.webp";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const copy = {
+  en: {
+    title: "Designing and building products that ship.",
+    subtitle:
+      "We partner with startups and growing teams to craft websites, platforms, and interfaces that feel sharp, fast, and memorable.",
+    cta: "START A PROJECT",
+  },
+  es: {
+    title: "Disenamos y construimos productos que salen al mercado.",
+    subtitle:
+      "Nos asociamos con startups y equipos en crecimiento para crear sitios, plataformas e interfaces rapidas, claras y memorables.",
+    cta: "INICIAR PROYECTO",
+  },
+} as const;
+
+const t = copy[lang];
 ---
 
-<section class="hero">
+<section class="hero" id="home">
   <div class="hero-bg">
-    <img src={heroBg} alt="" class="hero-img" />
+    <Image
+      src={heroBg}
+      alt=""
+      class="hero-img"
+      widths={[768, 1280, 1920]}
+      sizes="100vw"
+      loading="eager"
+      decoding="async"
+    />
     <div class="hero-frost"></div>
   </div>
 
   <div class="hero-content container">
     <div class="hero-text">
       <h1 class="hero-title" data-reveal="up" data-delay="200">
-        Designing and building<br class="hero-break" />products that ship.
+        {t.title}
       </h1>
       <p class="hero-subtitle" data-reveal="up" data-delay="400">
-        We partner with startups and growing teams to craft websites, platforms,
-        and interfaces that feel sharp, fast, and memorable.
+        {t.subtitle}
       </p>
     </div>
-    <a href="#" class="btn hero-cta" data-reveal="up" data-delay="550">
-      <span>START A PROJECT</span>
+    <a
+      href={withLocale(lang, "/blog")}
+      class="btn hero-cta"
+      data-reveal="up"
+      data-delay="550"
+    >
+      <span>{t.cta}</span>
       <span class="btn-icon">
         <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
           <path

@@ -7,8 +7,21 @@ gsap.registerPlugin(ScrollTrigger);
 const SKIP = new Set<Element>();
 
 export function initAnimations() {
+  if ((window as Window & { __jaiAnimationsInit?: boolean }).__jaiAnimationsInit) {
+    return;
+  }
+  (window as Window & { __jaiAnimationsInit?: boolean }).__jaiAnimationsInit = true;
+
   const ease = 'power3.out';
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  ScrollTrigger.config({ ignoreMobileResize: true });
+
+  if (reduceMotion) {
+    gsap.set('[data-reveal]', { clearProps: 'all', opacity: 1 });
+    return;
+  }
 
   // ── Nav ──────────────────────────────────────────
   const nav = document.querySelector('.nav-header');
@@ -36,11 +49,16 @@ export function initAnimations() {
 
   // ── Hero parallax ────────────────────────────────
   const heroBg = document.querySelector<HTMLElement>('.hero-img');
-  if (heroBg) {
+  if (heroBg && !isMobile) {
     gsap.to(heroBg, {
-      yPercent: 18,
+      yPercent: 12,
       ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.6,
+      },
     });
   }
 
@@ -61,7 +79,7 @@ export function initAnimations() {
         ease: 'power2.out',
         snap: { val: 1 },
         onUpdate() { el.textContent = `${prefix}${Math.round(obj.val)}${suffix}`; },
-        scrollTrigger: { trigger: el, start: 'top 85%' },
+        scrollTrigger: { trigger: el, start: 'top 85%', once: true },
       }
     );
   });
@@ -75,7 +93,7 @@ export function initAnimations() {
       { opacity: 0, y: 70 },
       {
         opacity: 1, y: 0, duration: 1.1, ease: 'power4.out',
-        scrollTrigger: { trigger: el, start: 'top 90%' }
+        scrollTrigger: { trigger: el, start: 'top 90%', once: true }
       }
     );
   });
@@ -104,11 +122,11 @@ export function initAnimations() {
       isMobile
         ? {
           opacity: 1, y: 0, duration: 0.9, ease,
-          scrollTrigger: { trigger: row, start: 'top 85%' }
+          scrollTrigger: { trigger: row, start: 'top 85%', once: true }
         }
         : {
           opacity: 1, x: 0, duration: 0.9, ease,
-          scrollTrigger: { trigger: row, start: 'top 85%' }
+          scrollTrigger: { trigger: row, start: 'top 85%', once: true }
         }
     );
   });
@@ -124,11 +142,11 @@ export function initAnimations() {
       isMobile
         ? {
           opacity: 1, y: 0, duration: 1, ease,
-          scrollTrigger: { trigger: portrait, start: 'top 85%' }
+          scrollTrigger: { trigger: portrait, start: 'top 85%', once: true }
         }
         : {
           opacity: 1, x: 0, duration: 1, ease,
-          scrollTrigger: { trigger: portrait, start: 'top 85%' }
+          scrollTrigger: { trigger: portrait, start: 'top 85%', once: true }
         });
 
   }
@@ -140,11 +158,11 @@ export function initAnimations() {
       isMobile
         ? {
           opacity: 1, y: 0, duration: 1, ease, delay: 0.1,
-          scrollTrigger: { trigger: tContent, start: 'top 85%' }
+          scrollTrigger: { trigger: tContent, start: 'top 85%', once: true }
         }
         : {
           opacity: 1, x: 0, duration: 1, ease, delay: 0.15,
-          scrollTrigger: { trigger: tContent, start: 'top 85%' }
+          scrollTrigger: { trigger: tContent, start: 'top 85%', once: true }
         }
     );
   }
@@ -157,7 +175,7 @@ export function initAnimations() {
       { opacity: 0, scale: 0.7 },
       {
         opacity: 1, scale: 1, duration: 1.2, ease: 'elastic.out(1,0.5)',
-        scrollTrigger: { trigger: footerLogo, start: 'top 90%' }
+        scrollTrigger: { trigger: footerLogo, start: 'top 90%', once: true }
       }
     );
   }
@@ -172,7 +190,7 @@ export function initAnimations() {
     const from: gsap.TweenVars = { opacity: 0 };
     const to: gsap.TweenVars = {
       opacity: 1, duration: 0.85, ease, delay,
-      scrollTrigger: { trigger: el, start: 'top 88%' }
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
     };
 
     if (type === 'up') { from.y = 45; to.y = 0; }

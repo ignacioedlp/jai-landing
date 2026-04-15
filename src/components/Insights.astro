@@ -1,69 +1,75 @@
 ---
-const posts = [
-  {
-    num: "01",
-    img: "blog1.webp",
-    date: "Feb 12, 2025",
-    category: "Design",
-    title: "Why Product Thinking Improves Every Website",
-    excerpt:
-      "The strongest websites behave like products: focused flows, clear actions, and no wasted effort.",
-    featured: true,
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import { type Locale, withLocale } from "@/i18n/config";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const copy = {
+  en: {
+    label: "STUDIO NOTES",
+    title: "Insights",
+    subtitle: "Thoughts on design, engineering, and the way digital products are built.",
+    allPosts: "ALL POSTS",
+    readPost: "Read post",
+    readShort: "Read",
+    fallbackCategory: "Insights",
   },
-  {
-    num: "02",
-    img: "blog2.webp",
-    date: "Jan 28, 2025",
-    category: "Engineering",
-    title: "Choosing the Right Stack for a Fast Launch",
-    excerpt:
-      "What to prioritize when speed, scalability, and maintainability all matter.",
-    featured: false,
+  es: {
+    label: "NOTAS DEL ESTUDIO",
+    title: "Insights",
+    subtitle: "Ideas sobre diseno, ingenieria y como se construyen productos digitales.",
+    allPosts: "VER TODOS",
+    readPost: "Leer articulo",
+    readShort: "Leer",
+    fallbackCategory: "Insights",
   },
-  {
-    num: "03",
-    img: "blog3.webp",
-    date: "Jan 10, 2025",
-    category: "Strategy",
-    title: "How We Shape Clearer Product Roadmaps",
-    excerpt:
-      "Practical prioritization for teams that need direction, not more ideas.",
-    featured: false,
-  },
-  {
-    num: "04",
-    img: "blog4.webp",
-    date: "Dec 20, 2024",
-    category: "Delivery",
-    title: "How to Keep Momentum After Launch",
-    excerpt:
-      "A short framework for ongoing iteration once the first version is live.",
-    featured: false,
-  },
-];
+} as const;
+
+const t = copy[lang];
+
+const posts = (await getCollection(
+  "blog",
+  ({ data }) => !data.draft && data.locale === lang,
+)).sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
+);
 
 const featured = posts[0];
-const secondary = posts.slice(1);
+const secondary = posts.slice(1, 4);
+
+const dateFormatter = new Intl.DateTimeFormat(lang === "es" ? "es-AR" : "en-US", {
+  month: "short",
+  day: "2-digit",
+  year: "numeric",
+});
+
+function postHref(slug: string) {
+  return withLocale(lang, `/blog/${slug}`);
+}
 ---
 
-<section class="insights">
+<section class="insights" id="insights">
   <div class="container">
     <!-- header -->
     <div class="insights-header">
       <div class="insights-header-left" data-reveal="left">
         <div class="section-label-nocenter">
           <span class="dot"></span>
-          <span>STUDIO NOTES</span>
+          <span>{t.label}</span>
         </div>
-        <h2 class="insights-title">Insights</h2>
+        <h2 class="insights-title">{t.title}</h2>
       </div>
       <div class="insights-header-right" data-reveal="right" data-delay="150">
         <p class="insights-sub">
-          Thoughts on design, engineering,<br />and the way digital products are
-          built.
+          {t.subtitle}
         </p>
-        <a href="#" class="btn insights-btn">
-          <span>ALL POSTS</span>
+        <a href={withLocale(lang, "/blog")} class="btn insights-btn">
+          <span>{t.allPosts}</span>
           <span class="btn-icon">
             <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -82,34 +88,39 @@ const secondary = posts.slice(1);
     <div class="divider" style="margin-bottom: 40px;"></div>
 
     <!-- main grid -->
-    <div class="insights-grid">
+    {
+      featured && (
+        <div class="insights-grid">
       <!-- featured: large left -->
       <a
-        href="#"
+        href={postHref(featured.slug)}
         class="post-card post-card--featured"
         data-reveal="left"
         data-delay="200"
       >
         <div class="post-img-wrap">
-          <img
-            src={featured.img}
-            alt={featured.title}
+          <Image
+            src={featured.data.image}
+            alt={featured.data.imageAlt}
             class="post-img"
             loading="lazy"
+            decoding="async"
+            widths={[640, 1024, 1440]}
+            sizes="(max-width: 1024px) 100vw, 70vw"
           />
           <div class="post-overlay"></div>
         </div>
         <div class="post-body">
           <div class="post-top">
-            <span class="post-category">{featured.category}</span>
-            <span class="post-num">{featured.num}</span>
+            <span class="post-category">{featured.data.category ?? t.fallbackCategory}</span>
+            <span class="post-num">01</span>
           </div>
           <div class="post-bottom">
-            <time class="post-date">{featured.date}</time>
-            <h3 class="post-title">{featured.title}</h3>
-            <p class="post-excerpt">{featured.excerpt}</p>
+            <time class="post-date">{dateFormatter.format(featured.data.publishDate)}</time>
+            <h3 class="post-title">{featured.data.title}</h3>
+            <p class="post-excerpt">{featured.data.description}</p>
             <span class="post-link">
-              Read post
+              {t.readPost}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M5 12h14M13 6l6 6-6 6"
@@ -128,30 +139,33 @@ const secondary = posts.slice(1);
         {
           secondary.map((post, i) => (
             <a
-              href="#"
+              href={postHref(post.slug)}
               class="post-card post-card--small"
               data-reveal="right"
               data-delay={250 + i * 100}
             >
               <div class="post-img-wrap">
-                <img
-                  src={post.img}
-                  alt={post.title}
+                <Image
+                  src={post.data.image}
+                  alt={post.data.imageAlt}
                   class="post-img"
                   loading="lazy"
+                  decoding="async"
+                  widths={[360, 640, 960]}
+                  sizes="(max-width: 1024px) 100vw, 30vw"
                 />
                 <div class="post-overlay" />
               </div>
               <div class="post-body">
                 <div class="post-top">
-                  <span class="post-category">{post.category}</span>
-                  <span class="post-num">{post.num}</span>
+                  <span class="post-category">{post.data.category ?? t.fallbackCategory}</span>
+                  <span class="post-num">{`0${i + 2}`}</span>
                 </div>
                 <div class="post-bottom">
-                  <time class="post-date">{post.date}</time>
-                  <h3 class="post-title">{post.title}</h3>
+                  <time class="post-date">{dateFormatter.format(post.data.publishDate)}</time>
+                  <h3 class="post-title">{post.data.title}</h3>
                   <span class="post-link">
-                    Read
+                    {t.readShort}
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                       <path
                         d="M5 12h14M13 6l6 6-6 6"
@@ -168,7 +182,9 @@ const secondary = posts.slice(1);
           ))
         }
       </div>
-    </div>
+        </div>
+      )
+    }
   </div>
 </section>
 

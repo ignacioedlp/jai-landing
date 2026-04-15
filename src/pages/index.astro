@@ -1,28 +1,5 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import Nav from "@/components/Nav.astro";
-import Hero from "@/components/Hero.astro";
-import Stats from "@/components/Stats.astro";
-import Works from "@/components/Works.astro";
-import Services from "@/components/Services.astro";
-import Team from "@/components/Team.astro";
-import Testimonials from "@/components/Testimonials.astro";
-import Process from "@/components/Process.astro";
-import Insights from "@/components/Insights.astro";
-import Footer from "@/components/Footer.astro";
----
+import { defaultLocale } from "@/i18n/config";
 
-<Layout>
-  <Nav />
-  <main>
-    <Hero />
-    <Stats />
-    <Works />
-    <Services />
-    <Team />
-    <Testimonials />
-    <Process />
-    <Insights />
-  </main>
-  <Footer />
-</Layout>
+return Astro.redirect(`/${defaultLocale}/`);
+---

@@ -1,72 +1,146 @@
 ---
-const serviceImg =
-  "https://images.unsplash.com/photo-1542744094-3a31f272c490?q=80&w=1470&auto=format&fit=crop";
+import { Image } from "astro:assets";
+import { type Locale } from "@/i18n/config";
+import services1 from "@/assets/services1.webp";
+import services2 from "@/assets/services2.webp";
+import services3 from "@/assets/services3.webp";
+import services4 from "@/assets/services4.webp";
+import services5 from "@/assets/services5.webp";
+import services6 from "@/assets/services6.webp";
 
-const services = [
-  {
-    number: "1",
-    title: "Backend Development",
-    desc: "We build stable backend foundations with clean APIs, reliable data flows, and integrations that hold up as products scale.",
-    tags: ["Node.js", "Python", "Ruby on Rails"],
-    img: "services1.webp",
-  },
-  {
-    number: "2",
-    title: "Frontend Development",
-    desc: "We design and ship fast, accessible interfaces that translate strategy into a crisp product experience.",
-    tags: ["React", "Vue.js", "Angular"],
-    img: "services2.webp",
-  },
-  {
-    number: "3",
-    title: "Mobile App Development",
-    desc: "We create native-feeling mobile apps that help teams reach users wherever they are.",
-    tags: ["React Native", "iOS", "Android"],
-    img: "services3.webp",
-  },
-  {
-    number: "4",
-    title: "Security Auditing",
-    desc: "We review surface area, permissions, and deployment practices to help teams reduce risk before launch.",
-    tags: ["Penetration Testing", "Vulnerability Assessment", "Compliance"],
-    img: "services4.webp",
-  },
-  {
-    number: "5",
-    title: "Technology Consulting",
-    desc: "We help founders and internal teams choose the right stack, roadmap, and delivery model for the next stage.",
-    tags: ["Digital Strategy", "Technology Roadmap", "Innovation"],
-    img: "services5.webp",
-  },
-  {
-    number: "6",
-    title: "Artificial Intelligence Solutions",
-    desc: "We prototype AI workflows and product features that automate work and unlock new value for customers.",
-    tags: [
-      "Machine Learning",
-      "Natural Language Processing",
-      "Computer Vision",
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const copy = {
+  en: {
+    section: "SERVICES",
+    title: "Services",
+    desc: "A compact studio model that covers strategy, design, engineering, and launch support under one roof.",
+    services: [
+      {
+        number: "1",
+        title: "Backend Development",
+        desc: "We build stable backend foundations with clean APIs, reliable data flows, and integrations that hold up as products scale.",
+        tags: ["Node.js", "Python", "Ruby on Rails"],
+        img: services1,
+      },
+      {
+        number: "2",
+        title: "Frontend Development",
+        desc: "We design and ship fast, accessible interfaces that translate strategy into a crisp product experience.",
+        tags: ["React", "Vue.js", "Angular"],
+        img: services2,
+      },
+      {
+        number: "3",
+        title: "Mobile App Development",
+        desc: "We create native-feeling mobile apps that help teams reach users wherever they are.",
+        tags: ["React Native", "iOS", "Android"],
+        img: services3,
+      },
+      {
+        number: "4",
+        title: "Security Auditing",
+        desc: "We review surface area, permissions, and deployment practices to help teams reduce risk before launch.",
+        tags: ["Penetration Testing", "Vulnerability Assessment", "Compliance"],
+        img: services4,
+      },
+      {
+        number: "5",
+        title: "Technology Consulting",
+        desc: "We help founders and internal teams choose the right stack, roadmap, and delivery model for the next stage.",
+        tags: ["Digital Strategy", "Technology Roadmap", "Innovation"],
+        img: services5,
+      },
+      {
+        number: "6",
+        title: "Artificial Intelligence Solutions",
+        desc: "We prototype AI workflows and product features that automate work and unlock new value for customers.",
+        tags: [
+          "Machine Learning",
+          "Natural Language Processing",
+          "Computer Vision",
+        ],
+        img: services6,
+      },
     ],
-    img: "services6.webp",
   },
-];
+  es: {
+    section: "SERVICIOS",
+    title: "Servicios",
+    desc: "Un modelo de estudio compacto que cubre estrategia, diseno, ingenieria y soporte de lanzamiento bajo el mismo techo.",
+    services: [
+      {
+        number: "1",
+        title: "Desarrollo Backend",
+        desc: "Construimos bases backend solidas con APIs limpias, flujos de datos confiables e integraciones que escalan con tu producto.",
+        tags: ["Node.js", "Python", "Ruby on Rails"],
+        img: services1,
+      },
+      {
+        number: "2",
+        title: "Desarrollo Frontend",
+        desc: "Disenamos y lanzamos interfaces rapidas y accesibles que convierten la estrategia en una experiencia de producto clara.",
+        tags: ["React", "Vue.js", "Angular"],
+        img: services2,
+      },
+      {
+        number: "3",
+        title: "Desarrollo de Apps Moviles",
+        desc: "Creamos aplicaciones moviles con experiencia nativa para llegar a los usuarios donde esten.",
+        tags: ["React Native", "iOS", "Android"],
+        img: services3,
+      },
+      {
+        number: "4",
+        title: "Auditoria de Seguridad",
+        desc: "Revisamos superficie de ataque, permisos y practicas de despliegue para reducir riesgos antes del lanzamiento.",
+        tags: ["Penetration Testing", "Vulnerability Assessment", "Compliance"],
+        img: services4,
+      },
+      {
+        number: "5",
+        title: "Consultoria Tecnologica",
+        desc: "Ayudamos a founders y equipos internos a elegir el stack, roadmap y modelo de entrega adecuados para la siguiente etapa.",
+        tags: ["Estrategia Digital", "Roadmap Tecnologico", "Innovacion"],
+        img: services5,
+      },
+      {
+        number: "6",
+        title: "Soluciones de Inteligencia Artificial",
+        desc: "Prototipamos flujos de IA y funcionalidades de producto que automatizan tareas y desbloquean nuevo valor.",
+        tags: [
+          "Machine Learning",
+          "Procesamiento de Lenguaje Natural",
+          "Vision Computacional",
+        ],
+        img: services6,
+      },
+    ],
+  },
+} as const;
+
+const t = copy[lang];
+const services = t.services;
 ---
 
-<section class="services">
+<section class="services" id="services">
   <div class="container">
     <div class="services-heading">
       <div class="section-label" data-reveal="up">
         <span class="dot"></span>
-        <span>SERVICES</span>
+        <span>{t.section}</span>
       </div>
       <div class="services-title-row" data-reveal="up" data-delay="100">
         <span class="counter">[02]</span>
-        <h2 class="services-title">Services</h2>
+        <h2 class="services-title">{t.title}</h2>
         <span class="year">©2025</span>
       </div>
       <p class="services-desc" data-reveal="up" data-delay="200">
-        A compact studio model that covers strategy, design, engineering, and
-        launch support under one roof.
+        {t.desc}
       </p>
       <div class="divider" data-reveal="line"></div>
     </div>
@@ -89,7 +163,15 @@ const services = [
             </div>
           </div>
           <div class="service-img-wrap">
-            <img src={service.img} alt={service.title} class="service-img" />
+            <Image
+              src={service.img}
+              alt={service.title}
+              class="service-img"
+              loading="lazy"
+              decoding="async"
+              widths={[480, 768, 1024]}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
           </div>
         </div>
       ))

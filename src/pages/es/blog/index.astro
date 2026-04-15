@@ -1,0 +1,84 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import BlogCard from "@/components/blog/BlogCard.astro";
+import { getPublishedPostsByLocale } from "@/lib/blog";
+
+const posts = await getPublishedPostsByLocale("es");
+---
+
+<Layout
+  lang="es"
+  title="Blog de JAI | Insights de Producto, Diseno e Ingenieria"
+  description="Articulos de JAI Studio sobre estrategia de producto digital, diseno, ingenieria y lanzamiento."
+>
+  <main class="blog-page container">
+    <header class="blog-header" data-reveal="up">
+      <p class="eyebrow">JAI Journal</p>
+      <h1>Blog</h1>
+      <p class="intro">
+        Notas del estudio sobre estrategia de producto, ejecucion de ingenieria
+        y sistemas que escalan con claridad.
+      </p>
+    </header>
+
+    <section class="blog-grid">
+      {posts.map((post) => <BlogCard post={post} lang="es" />)}
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .blog-page {
+    padding-top: 140px;
+    padding-bottom: 70px;
+  }
+
+  .blog-header {
+    margin-bottom: 32px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-orbitron);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: var(--font-orbitron);
+    font-size: clamp(42px, 7vw, 96px);
+    line-height: 0.95;
+    margin-bottom: 12px;
+  }
+
+  .intro {
+    max-width: 700px;
+    color: var(--text-secondary);
+    font-family: var(--font-orbitron);
+    line-height: 1.6;
+    font-size: 17px;
+  }
+
+  .blog-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 768px) {
+    .blog-page {
+      padding-top: 108px;
+      padding-bottom: 48px;
+    }
+
+    .intro {
+      font-size: 15px;
+    }
+
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

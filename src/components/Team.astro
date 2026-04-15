@@ -1,5 +1,32 @@
 ---
-const teamPhotos = ["agus.webp", "tofi.webp", "agus.webp", "tofi.webp"];
+import { Image } from "astro:assets";
+import { type Locale, withLocale } from "@/i18n/config";
+import agus from "@/assets/agus.webp";
+import tofi from "@/assets/tofi.webp";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const teamPhotos = [agus, tofi, agus, tofi];
+
+const copy = {
+  en: {
+    label: "THE STUDIO",
+    bio: "We are a small, senior team built to move quickly without sacrificing quality. Strategy, design, and engineering sit at the same table from day one.",
+    title: "Meet the Studio",
+    cta: "ABOUT US",
+  },
+  es: {
+    label: "EL ESTUDIO",
+    bio: "Somos un equipo senior y pequeno, preparado para moverse rapido sin sacrificar calidad. Estrategia, diseno e ingenieria trabajan juntos desde el dia uno.",
+    title: "Conoce al Estudio",
+    cta: "SOBRE NOSOTROS",
+  },
+} as const;
+
+const t = copy[lang];
 ---
 
 <section class="team">
@@ -7,14 +34,12 @@ const teamPhotos = ["agus.webp", "tofi.webp", "agus.webp", "tofi.webp"];
     <div class="team-label">
       <div class="section-label">
         <span class="dot"></span>
-        <span>THE STUDIO</span>
+        <span>{t.label}</span>
       </div>
     </div>
 
     <p class="team-bio">
-      We are a small, senior team built to move quickly without sacrificing
-      quality. Strategy, design, and engineering sit at the same table from day
-      one.
+      {t.bio}
     </p>
   </div>
 
@@ -23,15 +48,22 @@ const teamPhotos = ["agus.webp", "tofi.webp", "agus.webp", "tofi.webp"];
       {
         teamPhotos.map((photo, i) => (
           <div class="team-photo">
-            <img src={photo} alt={`Team member ${i + 1}`} />
+            <Image
+              src={photo}
+              alt={`Team member ${i + 1}`}
+              widths={[480, 768, 1024]}
+              sizes="(max-width: 1024px) 100vw, 25vw"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         ))
       }
     </div>
     <div class="team-overlay">
-      <h2 class="team-title">Meet the Studio</h2>
-      <a href="#" class="btn team-cta">
-        <span>ABOUT US</span>
+      <h2 class="team-title">{t.title}</h2>
+      <a href={withLocale(lang, "/blog")} class="btn team-cta">
+        <span>{t.cta}</span>
         <span class="btn-icon">
           <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
             <path

@@ -1,21 +1,62 @@
 ---
-const stats = [
-  {
-    value: "40+",
-    label: "Products shipped",
-    desc: "From brand refreshes to full-stack launches across industries.",
+import { type Locale, withLocale } from "@/i18n/config";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const copy = {
+  en: {
+    label: "IMPACT",
+    heading:
+      "Measurable results for brands that need more than a pretty interface.",
+    cta: "LET'S TALK",
+    stats: [
+      {
+        value: "40+",
+        label: "Products shipped",
+        desc: "From brand refreshes to full-stack launches across industries.",
+      },
+      {
+        value: "12",
+        label: "Specialists on demand",
+        desc: "Designers, developers, and strategists working as one team.",
+      },
+      {
+        value: "99%",
+        label: "Client retention",
+        desc: "Long-term partnerships built on clarity, speed, and outcomes.",
+      },
+    ],
   },
-  {
-    value: "12",
-    label: "Specialists on demand",
-    desc: "Designers, developers, and strategists working as one team.",
+  es: {
+    label: "IMPACTO",
+    heading:
+      "Resultados medibles para marcas que necesitan mas que una interfaz atractiva.",
+    cta: "HABLEMOS",
+    stats: [
+      {
+        value: "40+",
+        label: "Productos lanzados",
+        desc: "Desde refresh de marca hasta lanzamientos full-stack en distintas industrias.",
+      },
+      {
+        value: "12",
+        label: "Especialistas bajo demanda",
+        desc: "Disenadores, developers y estrategas trabajando como un solo equipo.",
+      },
+      {
+        value: "99%",
+        label: "Retencion de clientes",
+        desc: "Relaciones de largo plazo construidas con claridad, velocidad y resultados.",
+      },
+    ],
   },
-  {
-    value: "99%",
-    label: "Client retention",
-    desc: "Long-term partnerships built on clarity, speed, and outcomes.",
-  },
-];
+} as const;
+
+const t = copy[lang];
 ---
 
 <section class="stats">
@@ -23,16 +64,16 @@ const stats = [
     <div class="stats-top">
       <div class="section-label" data-reveal="left">
         <span class="dot"></span>
-        <span>IMPACT</span>
+        <span>{t.label}</span>
       </div>
       <h2 class="stats-heading" data-reveal="up" data-delay="150">
-        Measurable results for brands that need more than a pretty interface.
+        {t.heading}
       </h2>
     </div>
 
     <div class="stats-grid">
       {
-        stats.map((stat, i) => (
+        t.stats.map((stat, i) => (
           <div class="stat-card" data-reveal="up" data-delay={i * 120}>
             <div class="stat-top">
               <span class="stat-value">{stat.value}</span>
@@ -48,8 +89,8 @@ const stats = [
     </div>
 
     <div class="stats-cta" data-reveal="scale">
-      <a href="#" class="btn">
-        <span>LET'S TALK</span>
+      <a href={withLocale(lang, "/blog")} class="btn">
+        <span>{t.cta}</span>
         <span class="btn-icon">
           <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
             <path

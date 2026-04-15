@@ -1,18 +1,52 @@
 ---
-const portrait = "testimonial.webp";
-const avatar = "testimonial.webp";
+import { Image } from "astro:assets";
+import { type Locale } from "@/i18n/config";
+import testimonial from "@/assets/testimonial.webp";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const portrait = testimonial;
+const avatar = testimonial;
+
+const copy = {
+  en: {
+    section: "TESTIMONIALS",
+    quote:
+      '"JAI turned a vague idea into a focused product experience and helped us launch faster than we expected. The process was sharp from start to finish."',
+    role: "Founder, Northstar Commerce",
+  },
+  es: {
+    section: "TESTIMONIOS",
+    quote:
+      '"JAI convirtio una idea difusa en una experiencia de producto enfocada y nos ayudo a lanzar mas rapido de lo esperado. El proceso fue preciso de principio a fin."',
+    role: "Fundadora, Northstar Commerce",
+  },
+} as const;
+
+const t = copy[lang];
 ---
 
 <section class="testimonials">
   <div class="container">
     <div class="section-label" style="margin-bottom: 48px;" data-reveal="up">
       <span class="dot"></span>
-      <span>TESTIMONIALS</span>
+      <span>{t.section}</span>
     </div>
 
     <div class="testimonial-card" data-reveal="scale" data-delay="150">
       <div class="testimonial-portrait" data-reveal="left" data-delay="250">
-        <img src={portrait} alt="Sophie L." />
+        <Image
+          src={portrait}
+          alt="Sophie L."
+          class="testimonial-portrait-img"
+          widths={[640, 960, 1280]}
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
       <div class="testimonial-content">
         <div class="stars">
@@ -25,15 +59,21 @@ const avatar = "testimonial.webp";
           }
         </div>
         <blockquote class="testimonial-quote">
-          "JAI turned a vague idea into a focused product experience and helped
-          us launch faster than we expected. The process was sharp from start to
-          finish."
+          {t.quote}
         </blockquote>
         <div class="testimonial-author">
-          <img src={avatar} alt="Sophie L." class="author-avatar" />
+          <Image
+            src={avatar}
+            alt="Sophie L."
+            class="author-avatar"
+            widths={[64, 96]}
+            sizes="53px"
+            loading="lazy"
+            decoding="async"
+          />
           <div>
             <p class="author-name">Sophie L.</p>
-            <p class="author-role">Founder, Northstar Commerce</p>
+            <p class="author-role">{t.role}</p>
           </div>
         </div>
       </div>
@@ -57,7 +97,7 @@ const avatar = "testimonial.webp";
     overflow: hidden;
   }
 
-  .testimonial-portrait img {
+  .testimonial-portrait-img {
     width: 100%;
     height: 700px;
     object-fit: cover;
@@ -124,7 +164,7 @@ const avatar = "testimonial.webp";
       grid-template-columns: 1fr;
     }
 
-    .testimonial-portrait img {
+    .testimonial-portrait-img {
       height: 480px;
     }
 
@@ -138,7 +178,7 @@ const avatar = "testimonial.webp";
       padding-block: 48px;
     }
 
-    .testimonial-portrait img {
+    .testimonial-portrait-img {
       height: 300px;
     }
 

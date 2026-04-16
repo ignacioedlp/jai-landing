@@ -31,7 +31,7 @@ const basePath = withLocale(lang, "/");
 ---
 
 <header class="nav-header">
-  <nav class="nav-container container">
+  <nav class="nav-container">
     <a href={basePath} class="nav-logo">
       <!-- inline handshake icon -->
       <svg
@@ -114,7 +114,10 @@ const basePath = withLocale(lang, "/");
     justify-content: space-between;
     height: 100%;
     padding-block: 20px;
+    padding-inline: 40px;
+    width: 100%;
     box-sizing: border-box;
+    max-width: 100%;
   }
 
   .nav-logo {
@@ -192,6 +195,10 @@ const basePath = withLocale(lang, "/");
   }
 
   @media (max-width: 1024px) {
+    .nav-container {
+      padding-inline: 24px;
+    }
+
     .nav-links {
       display: none;
     }
@@ -212,6 +219,7 @@ const basePath = withLocale(lang, "/");
 
     .nav-container {
       padding-block: 14px;
+      padding-inline: 16px;
     }
 
     .logo-text {
@@ -241,6 +249,7 @@ const basePath = withLocale(lang, "/");
   @media (max-width: 480px) {
     .nav-container {
       gap: 8px;
+      padding-inline: 12px;
     }
 
     .nav-logo {

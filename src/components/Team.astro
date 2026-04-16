@@ -1,30 +1,92 @@
 ---
 import { Image } from "astro:assets";
-import { type Locale, withLocale } from "@/i18n/config";
+import { type Locale } from "@/i18n/config";
 import agus from "@/assets/agus.webp";
-import tofi from "@/assets/tofi.webp";
+import tofi from "@/assets/toxedev.webp";
 
 interface Props {
   lang: Locale;
 }
 
+type MemberPhoto = typeof tofi | typeof agus | null;
+
+interface Member {
+  name: string;
+  alias: string | null;
+  role: string;
+  detail: string;
+  photo: MemberPhoto;
+  initials: string;
+}
+
 const { lang } = Astro.props;
-const teamPhotos = [agus, tofi, agus, tofi];
+
+const membersEn: Member[] = [
+  {
+    name: "Ignacio Cafiero Torrubia",
+    alias: "Toxedev",
+    role: "Full-Stack Developer",
+    detail: "Web · Backend · Mobile",
+    photo: tofi,
+    initials: "IT",
+  },
+  {
+    name: "Agustín Paturlanne",
+    alias: null,
+    role: "Professional Pentester",
+    detail: "Security · Offensive",
+    photo: agus,
+    initials: "AP",
+  },
+  {
+    name: "Joaquín Cavenaghi",
+    alias: null,
+    role: "Data Specialist",
+    detail: "Analytics · AI",
+    photo: null,
+    initials: "JC",
+  },
+];
+
+const membersEs: Member[] = [
+  {
+    name: "Ignacio Cafiero Torrubia",
+    alias: "Toxedev",
+    role: "Desarrollador Full-Stack",
+    detail: "Web · Backend · Mobile",
+    photo: tofi,
+    initials: "IT",
+  },
+  {
+    name: "Agustín Paturlanne",
+    alias: null,
+    role: "Pentester Profesional",
+    detail: "Seguridad · Ofensivo",
+    photo: agus,
+    initials: "AP",
+  },
+  {
+    name: "Joaquín Cavenaghi",
+    alias: null,
+    role: "Especialista en Datos",
+    detail: "Analytics · IA",
+    photo: null,
+    initials: "JC",
+  },
+];
 
 const copy = {
   en: {
     label: "THE STUDIO",
     bio: "We are a small, senior team built to move quickly without sacrificing quality. Strategy, design, and engineering sit at the same table from day one.",
-    title: "Meet the Studio",
-    cta: "ABOUT US",
+    members: membersEn,
   },
   es: {
     label: "EL ESTUDIO",
-    bio: "Somos un equipo senior y pequeno, preparado para moverse rapido sin sacrificar calidad. Estrategia, diseno e ingenieria trabajan juntos desde el dia uno.",
-    title: "Conoce al Estudio",
-    cta: "SOBRE NOSOTROS",
+    bio: "Somos un equipo senior y pequeño, preparado para moverse rápido sin sacrificar calidad. Estrategia, diseño e ingeniería trabajan juntos desde el día uno.",
+    members: membersEs,
   },
-} as const;
+};
 
 const t = copy[lang];
 ---
@@ -43,40 +105,39 @@ const t = copy[lang];
     </p>
   </div>
 
-  <div class="team-strip-wrap">
-    <div class="team-strip">
-      {
-        teamPhotos.map((photo, i) => (
+  <div class="team-strip">
+    {
+      t.members.map((member) => (
+        <div class="team-card">
           <div class="team-photo">
-            <Image
-              src={photo}
-              alt={`Team member ${i + 1}`}
-              widths={[480, 768, 1024]}
-              sizes="(max-width: 1024px) 100vw, 25vw"
-              loading="lazy"
-              decoding="async"
-            />
+            {member.photo ? (
+              <Image
+                src={member.photo}
+                alt={member.name}
+                widths={[480, 768, 1024]}
+                sizes="(max-width: 768px) 100vw, 33vw"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <div class="team-placeholder">
+                <span class="team-initials">{member.initials}</span>
+              </div>
+            )}
           </div>
-        ))
-      }
-    </div>
-    <div class="team-overlay">
-      <h2 class="team-title">{t.title}</h2>
-      <a href={withLocale(lang, "/blog")} class="btn team-cta">
-        <span>{t.cta}</span>
-        <span class="btn-icon">
-          <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M2 7h10M8 3l4 4-4 4"
-              stroke="black"
-              stroke-width="1.5"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"></path>
-          </svg>
-        </span>
-      </a>
-    </div>
+          <div class="team-card-overlay">
+            <div class="team-card-info">
+              {member.alias && (
+                <span class="team-alias">{member.alias}</span>
+              )}
+              <h3 class="team-name">{member.name}</h3>
+              <p class="team-role">{member.role}</p>
+              <p class="team-detail">{member.detail}</p>
+            </div>
+          </div>
+        </div>
+      ))
+    }
   </div>
 </section>
 
@@ -102,50 +163,134 @@ const t = copy[lang];
     max-width: 600px;
   }
 
-  .team-strip-wrap {
+  /* Strip */
+  .team-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  /* Card */
+  .team-card {
     position: relative;
     overflow: hidden;
   }
 
-  .team-strip {
-    display: flex;
-    gap: 0;
-  }
-
   .team-photo {
-    flex-shrink: 0;
-    width: calc(25%);
+    width: 100%;
     overflow: hidden;
   }
 
   .team-photo img {
     width: 100%;
-    height: 480px;
+    height: 560px;
     object-fit: cover;
     display: block;
+    transition: transform 0.5s ease;
   }
 
-  .team-overlay {
-    position: absolute;
-    inset: 0;
+  .team-card:hover .team-photo img {
+    transform: scale(1.04);
+  }
+
+  /* Placeholder for missing photo */
+  .team-placeholder {
+    width: 100%;
+    height: 560px;
+    background: linear-gradient(160deg, #1a1a1a 0%, #0d0d0d 100%);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 24px;
-    background: rgba(0, 0, 0, 0.35);
   }
 
-  .team-title {
+  .team-initials {
     font-family: var(--font-orbitron);
-    font-weight: 600;
-    font-size: 80px;
-    color: white;
+    font-size: 72px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.08);
     letter-spacing: -2px;
+    user-select: none;
   }
 
-  .team-cta {
-    font-size: 14px;
+  /* Overlay */
+  .team-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.2) 50%,
+      transparent 100%
+    );
+    display: flex;
+    align-items: flex-end;
+    padding: 32px;
+    transition: background 0.3s ease;
+  }
+
+  .team-card:hover .team-card-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(0, 0, 0, 0.4) 60%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+  }
+
+  .team-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .team-alias {
+    font-family: var(--font-orbitron);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .team-name {
+    font-family: var(--font-orbitron);
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .team-role {
+    font-family: var(--font-orbitron);
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    margin-top: 6px;
+  }
+
+  .team-detail {
+    font-family: var(--font-orbitron);
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.35);
+    margin: 0;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .team-card:hover .team-detail {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Dividers between cards */
+  .team-card + .team-card {
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   @media (max-width: 1024px) {
@@ -164,22 +309,13 @@ const t = copy[lang];
       max-width: 100%;
     }
 
-    .team-strip {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+    .team-photo img,
+    .team-placeholder {
+      height: 420px;
     }
 
-    .team-photo {
-      width: 100%;
-    }
-
-    .team-photo img {
-      height: 360px;
-    }
-
-    .team-title {
-      font-size: 62px;
-      text-align: center;
+    .team-name {
+      font-size: 17px;
     }
   }
 
@@ -190,29 +326,29 @@ const t = copy[lang];
 
     .team-bio {
       font-size: 18px;
-      line-height: 1.5;
     }
 
     .team-strip {
       grid-template-columns: 1fr;
     }
 
-    .team-photo img {
-      height: 300px;
+    .team-card + .team-card {
+      border-left: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .team-overlay {
-      gap: 16px;
-      padding-inline: 16px;
+    .team-photo img,
+    .team-placeholder {
+      height: 360px;
     }
 
-    .team-title {
-      font-size: 40px;
-      letter-spacing: -1px;
+    .team-card-overlay {
+      padding: 24px;
     }
 
-    .team-cta {
-      font-size: 12px;
+    .team-detail {
+      opacity: 1;
+      transform: none;
     }
   }
 </style>

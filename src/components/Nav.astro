@@ -125,6 +125,7 @@ const basePath = withLocale(lang, "/");
     align-items: center;
     gap: 5px;
     text-decoration: none;
+    min-width: 0;
   }
 
   .nav-logo img {
@@ -139,6 +140,7 @@ const basePath = withLocale(lang, "/");
     letter-spacing: -0.56px;
     color: var(--text-primary);
     line-height: 1;
+    white-space: nowrap;
   }
 
   .nav-links {
@@ -173,6 +175,7 @@ const basePath = withLocale(lang, "/");
     display: flex;
     align-items: center;
     gap: 16px;
+    flex-shrink: 0;
   }
 
   .lang-switch {
@@ -268,6 +271,21 @@ const basePath = withLocale(lang, "/");
     .btn-nav .btn-icon {
       width: 22px;
       height: 22px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .btn-nav {
+      padding: 3px;
+      min-width: 0;
+    }
+
+    .btn-nav > span:first-child {
+      display: none;
+    }
+
+    .nav-actions {
+      gap: 8px;
     }
   }
 </style>

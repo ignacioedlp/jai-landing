@@ -2,6 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import BlogCard from "@/components/blog/BlogCard.astro";
 import { getPublishedPostsByLocale } from "@/lib/blog";
+import Nav from "@/components/Nav.astro";
 
 const posts = await getPublishedPostsByLocale("en");
 ---
@@ -11,6 +12,8 @@ const posts = await getPublishedPostsByLocale("en");
   title="JAI Blog | Product, Design, and Engineering Insights"
   description="Articles from JAI Studio on digital product strategy, design systems, engineering and launch execution."
 >
+  <Nav lang="en" />
+
   <main class="blog-page container">
     <header class="blog-header" data-reveal="up">
       <p class="eyebrow">JAI Journal</p>
